@@ -1,25 +1,17 @@
 @import "../../../../assets/scss/theme-variables.scss";
+@import "../../../style/common-classes";
 
 .email-template__container {
-  padding: 25px 30px;
+  @extend .common-container;
 
   .email-template__header {
-    display: flex;
-    align-items: center;
-
-    &-text {
-      font-family: var(--font-family);
-      font-weight: 500;
-      font-size: 20px;
-      color: $black;
-    }
+    @extend .common-header;
   }
 
   .email-template__divider {
     margin-bottom: 25px;
     margin-top: 25px;
-    border: 0.5px solid $gray-400;
-    width: 100%;
+    @extend .common-divider;
   }
 
   .email-template__header-content {
@@ -28,17 +20,11 @@
     justify-content: space-between;
 
     .email-template__title {
-      font-family: var(--font-family);
-      font-weight: 500;
-      font-size: 18px;
-      color: $black;
+      @extend .common-title;
     }
 
     .email-template__custom-title {
-      font-family: var(--font-family);
-      font-weight: 200;
-      font-size: 16px;
-      color: rgba($black, 0.8);
+      @extend .common-custom-title;
       padding-top: 15px;
       padding-bottom: 20px;
     }
@@ -58,4 +44,8 @@
     flex-direction: row;
     margin-bottom: 15px;
   }
+  .truncated-text {
+   @extend .common-truncated-text 
+  }
+  
 }

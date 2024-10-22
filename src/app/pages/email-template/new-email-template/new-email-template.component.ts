@@ -75,7 +75,6 @@ export class NewemailtemplateComponent {
   }
     // Capture the content change from the rich text editor
     onRichTextContentChange(content: string) {
-      console.log('Rich Text Editor Content:', content);
       this.emailContent = content; // Store the raw content
       this.previewContent = this.sanitizeContent(content); // Sanitize the content for preview
     }

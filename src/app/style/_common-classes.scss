@@ -1,0 +1,83 @@
+@import "../../assets/scss/theme-variables.scss";
+
+.common-container {
+    padding: 25px 30px;
+}
+
+.common-header {
+    display: flex;
+    align-items: center;
+
+    &-text {
+        font-family: var(--font-family);
+        font-weight: 500;
+        font-size: 20px;
+        color: $black;
+    }
+}
+
+.common-divider {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border: 0.5px solid $gray-400;
+    width: 100%;
+}
+
+.common-title {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 18px;
+    color: $black;
+}
+
+.common-custom-title {
+    font-family: var(--font-family);
+    font-weight: 200;
+    font-size: 16px;
+    color: rgba($black, 0.8);
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+.center-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.marker-style {
+    width: 5px;
+    height: 26px;
+    background-color: $primary-color;
+}
+
+.flex-header-style {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0px;
+}
+
+.common-header-container {
+    padding: 18px;
+    background-color: $white;
+}
+
+.common-border-style {
+    border: 1px solid $border-color;
+}
+
+.common-rectangular-box {
+    background-color: $white;
+    border: 1px solid $border-color;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.common-truncated-text {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}

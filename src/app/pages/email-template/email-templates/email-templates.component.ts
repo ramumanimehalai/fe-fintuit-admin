@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 interface EmailTemplate {
   title: string;
   description: string;
-  templateId: number;
+  templatecode: string;
   icon: string;
 }
 
@@ -27,21 +27,21 @@ export class EmailtemplateComponent implements OnInit {
         title: 'New User Onboarding Email',
         description:
           'When a new user is added, an email has to be sent to the user with a password.',
-        templateId: 102,
+        templatecode: '102',
         icon: 'icon', // replace with actual icon name if needed
       },
       {
         title: 'New User Onboarding Email',
         description:
           'When a new user is added, an email has to be sent to the user with a password.',
-        templateId: 102,
+          templatecode: '102',
         icon: 'icon', // replace with actual icon name if needed
       },
       {
         title: 'New User Onboarding Email',
         description:
           'When a new user is added, an email has to be sent to the user with a password.',
-        templateId: 102,
+          templatecode: '102',
         icon: 'icon', // replace with actual icon name if needed
       },
     ];

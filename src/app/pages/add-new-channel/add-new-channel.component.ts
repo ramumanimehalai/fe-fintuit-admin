@@ -6,9 +6,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { DsButtonComponent } from 'jas-ui-lib';
+import { DsButtonComponent, DsIconComponent, DsToggleComponent } from 'jas-ui-lib';
 import { InputTextboxComponent } from '../../shared/components/input-textbox/input-textbox.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-new-channel',
@@ -18,6 +19,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     ReactiveFormsModule,
     DsButtonComponent,
     MatTabsModule,
+    DsIconComponent,
+    DsToggleComponent,
+    CommonModule
   ],
   templateUrl: './add-new-channel.component.html',
   styleUrl: './add-new-channel.component.scss',
@@ -25,11 +29,19 @@ import { MatTabsModule } from '@angular/material/tabs';
 export class AddNewChannelComponent {
   public configForm!: FormGroup;
   username: string = '';
+  selectedAuth: string = '';
   usernameInvalid: boolean = false;
+  toggleStates: { [key: string]: boolean } = {
+    email: true,
+    textMessage: false,
+    whatsapp: false,
+    notification: false
+  };
 
   constructor(private fb: FormBuilder) {
     this.configForm = this.fb.group({
-      region: new FormControl('', Validators.required), // Region selection
+      method: new FormControl('', Validators.required), // Region selection
+      authorization: new FormControl('', Validators.required), // Region selection
       channels: this.fb.group({
         email: new FormControl(true), // Email checkbox
         sms: new FormControl(true), // SMS checkbox
@@ -67,6 +79,14 @@ export class AddNewChannelComponent {
         fcmSenderId: new FormControl('', Validators.required),
         active: new FormControl(true),
       }),
+      authorizationConfig: this.fb.group({
+        authorization: new FormControl('', Validators.required), // Authorization selection
+        username: new FormControl(''), // Username for Basic Auth
+        password: new FormControl(''), // Password for Basic Auth
+        token: new FormControl(''), // Token for Bearer token
+        key: new FormControl(''), // Key for API Key
+        value: new FormControl(''), // Value for API Key
+      }),
     });
   }
 
@@ -99,7 +119,17 @@ export class AddNewChannelComponent {
     return this.getFormControl('pushConfig', controlName);
   }
 
-  onSelectRegion(e: any) {
-    this.configForm.get('region')?.setValue(e.target.value);
+  onSelectMethod(e: any) {
+    this.configForm.get('method')?.setValue(e.target.value);
   }
+  onSelectAuthorization(e: any) {
+    const selectedValue = e.target.value;
+    console.log(selectedValue,"selectedValue")
+    this.configForm.get('authorizationConfig')?.setValue(selectedValue);
+    this.selectedAuth = selectedValue; // Update selectedAuth for visibility control
+  }
+  toggle(key: string) {
+    this.toggleStates[key] = !this.toggleStates[key];
+  }
+  
 }
