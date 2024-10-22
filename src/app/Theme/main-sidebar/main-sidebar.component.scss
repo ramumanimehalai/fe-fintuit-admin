@@ -1,0 +1,16 @@
+.main-sidebar-container {
+  padding-top: 5px;
+  display: flex;
+  width: 50px;
+  border-right: 1px solid var(--border-color);
+  height: inherit;
+}
+.logo-container {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--dark-background-color, var(--border-color));
+  border-right: 2px solid var(--primary-color);
+}

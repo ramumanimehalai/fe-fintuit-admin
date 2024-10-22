@@ -1,0 +1,31 @@
+.header-container {
+  height: 60px;
+  border-bottom: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+}
+.collapse-container {
+  display: flex;
+  align-items: center;
+  width: 200px;
+  height: inherit;
+  padding: 4px 15px 0px 15px;
+  justify-content: space-between;
+  border-right: 1px solid var(--border-color);
+}
+
+.icon-wrapper {
+  width: 24px;
+  height: 24px;
+}
+.rotate {
+  transform: rotate(180deg); /* Rotate 90 degrees */
+  transition: transform 0.3s ease; /* Smooth transition */
+  transform-origin: 12px 9px;
+}
+
+.arrow {
+  transform-origin: 12px 9px;
+  transform: rotate(0deg); /* No rotation */
+  transition: transform 0.3s ease; /* Smooth transition */
+}

@@ -1,0 +1,19 @@
+<div class="app-wrapper">
+  <!-- Main Sidebar -->
+
+  <app-main-sidebar class="full-height"></app-main-sidebar>
+
+  <!-- Header Section -->
+  <div class="app-container">
+    <div class="header-wrapper">
+      <app-header></app-header>
+    </div>
+    <div class="content">
+      <app-sidebar />
+      <!-- Main Content Area -->
+      <div class="body-wrapper" [ngClass]="{ shifted: showWrapper }">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

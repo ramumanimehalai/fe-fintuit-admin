@@ -1,0 +1,17 @@
+<label>{{ label }}</label>
+<div class="editor-container">
+  <quill-editor
+    [formControl]="control"
+    [modules]="quillConfig"
+    placeholder="Compose an epic..."
+    theme="snow"
+    style="width: 100%; height: inherit; background-color: #fff"
+  >
+  </quill-editor>
+</div>
+<div
+  class="text-danger"
+  *ngIf="control.invalid && (control.touched || control.dirty)"
+>
+  {{ getErrorMessage() }}
+</div>

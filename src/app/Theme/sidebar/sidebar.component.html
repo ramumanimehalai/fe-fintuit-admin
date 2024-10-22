@@ -1,0 +1,31 @@
+<div class="sidebar-container" [ngClass]="{ close: !isOpen, open: isOpen }">
+  <ul class="sidebar-menu">
+    <!-- Loop through the sidebarContent array -->
+    <li *ngFor="let option of sidebarconstant">
+      <!-- Render main menu items if they exist -->
+      <div *ngIf="option.menu.length" class="menu-item expandable">
+        <div class="menu-header-item" (click)="toggleSubmenu(option)">
+          <span>{{ option.menu[0].label }}</span>
+          <div class="icon-wrapper" *ngIf="option.submenu.length">
+            <mat-icon class="arrow" [class.rotated]="option.isSubmenuOpen"
+              >keyboard_arrow_down</mat-icon
+            >
+          </div>
+        </div>
+
+        <!-- Render submenu if the main item is expandable -->
+        <ul class="submenu" [ngClass]="{ open: option.isSubmenuOpen }">
+          <li
+            *ngFor="let sub of option.submenu"
+            class="submenu-content"
+            [ngClass]="{ active: activeSubmenu === sub.path }"
+          >
+            <a (click)="navigateTo(sub.path)">
+              <h5>{{ sub.label }}</h5>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>

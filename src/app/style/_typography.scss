@@ -1,0 +1,29 @@
+.app-typography h1 {
+  font: 500 24px / 31.25px var(--font-family) !important; /* Your custom styles */
+  letter-spacing: -0.02em !important ;
+  margin: 0 !important;
+}
+
+.app-typography h2 {
+  font: 500 20px / 26.05px var(--font-family) !important; /* Your custom styles */
+  letter-spacing: -0.02em !important;
+  margin: 0;
+}
+
+.app-typography h3 {
+  font: 500 18px / 26.05px var(--font-family) !important; /* Your custom styles */
+  letter-spacing: -0.02em !important;
+  margin: 0;
+}
+
+.app-typography h4 {
+  font: 400 16px / 26.05px var(--font-family) !important; /* Your custom styles */
+  letter-spacing: -0.02em !important;
+  margin: 0;
+}
+
+.app-typography h5 {
+  font: 400 14px / 18.23px var(--font-family) !important; /* Your custom styles */
+  letter-spacing: -0.02em !important;
+  margin: 0;
+}

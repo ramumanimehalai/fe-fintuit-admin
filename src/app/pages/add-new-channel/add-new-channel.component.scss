@@ -1,0 +1,42 @@
+@import "../../style/common-variables";
+
+.form-container {
+  background-color: $form-bg-color;
+}
+.header_marker {
+  width: 5px;
+  height: 26px;
+  background-color: $primary-color;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0px;
+}
+.header_text {
+  color: $black;
+  font-weight: 500;
+  font-size: 18px;
+  font-family: var(--font-family);
+}
+.header-container {
+  padding: 18px; /* Add padding for spacing */
+  background-color: $white; /* Example background color */
+}
+.divider {
+  height: 1px; /* Thickness of the line */
+  background-color: $border-color; /* Color of the line */
+}
+.templateheader_text {
+  color: $black;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: var(--font-family);
+}
+.rectangular-box {
+  background-color: $white; /* Light background color */
+  border: 1px solid $border-color; /* Border color */
+  border-radius: 12px; /* Slightly rounded corners */
+  padding: 20px; /* Padding inside the box */
+}

@@ -1,0 +1,17 @@
+.login-wrapper {
+  width: 100vw; /* Full width of the parent */
+  height: 100vh; /* Full height of the parent */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-container {
+  border-radius: 8px;
+  padding: 20px 20px;
+  border: 2px solid var(--border-color);
+  width: 450px; /* Fixed width */
+}
+.button_container {
+  width: 100% !important;
+}

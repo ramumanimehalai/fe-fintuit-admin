@@ -1,0 +1,34 @@
+// import Quill styles in styles.scss
+@use "@angular/material" as mat;
+@import "../node_modules/quill/dist/quill.core.css";
+@import "../node_modules/quill/dist/quill.snow.css";
+@import "../node_modules/quill/dist/quill.bubble.css";
+@import "../src/app//style/typography";
+
+// own theme variables
+@import "./assets/scss/theme-variables.scss";
+
+// from node-modules
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+:root {
+  --primary-color: #{$primary-color};
+  --secondary-color: #{$secondary-color};
+  --success-color: #{$success-color};
+  --danger-color: #{$danger-color};
+  --warning-color: #{$warning-color};
+  --info-color: #{$info-color};
+
+  --border-color: #{$border-color};
+  --primary-text-color: #{$primary-color-dark};
+}
+
+html,
+body {
+  height: 100vh;
+}
+body {
+  margin: 0;
+  font-family: "DM Sans" !important;
+  overflow-x: hidden;
+}

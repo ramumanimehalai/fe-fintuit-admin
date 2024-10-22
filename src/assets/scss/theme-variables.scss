@@ -1,0 +1,34 @@
+// Theme variables
+$primary-color: #c2eb2e;
+$primary-color-dark: #000000;
+$primary-color-light: #faffeb;
+$background-color: #70b6001e;
+
+// Varients
+$secondary-color: #6c757d;
+$success-color: #2ecc71;
+$danger-color: #e74c3c;
+$warning-color: #f39c12;
+$info-color: #3498db;
+
+// Gray-color-variables
+$white: #fff !default;
+$gray-400: #ced4da !default;
+$black: #000 !default;
+$border-color: #e2e8f0 !default;
+
+//  ================================================================================================
+//  ? TIP:  It is recommended to use this file for overriding bootstrap variables.
+//  ================================================================================================
+
+// Theme-colors-map
+$theme-colors: (
+  "primary": $primary-color,
+  "secondary": $secondary-color,
+  "success": $success-color,
+  "info": $info-color,
+  "warning": $warning-color,
+  "danger": $danger-color,
+  "light": $primary-color-light,
+  "dark": $primary-color-dark,
+) !default;

@@ -1,0 +1,58 @@
+.app-wrapper {
+  display: flex;
+  height: 100vh; /* Full viewport height */
+}
+.full-height {
+  height: 100vh;
+  overflow-y: hidden;
+}
+.app-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 0 20px;
+  border-bottom: 1px solid #dee2e6;
+  position: fixed;
+  top: 0;
+  left: 50px;
+  right: 0;
+  z-index: 1000;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  // margin-top: 60px; /* Ensure content starts below the fixed header */
+  overflow-y: auto;
+}
+
+.body-wrapper {
+  flex-grow: 1;
+  // padding: 25px 30px;
+  overflow-y: auto; /* Allow body content to scroll */
+
+  transition: margin-left 0.3s ease-in-out; /* Smooth transition for margin */
+}
+
+/* When the sidebar is open */
+.body-wrapper.shifted {
+  margin-left: 210px; /* Adjust margin to match the sidebar width */
+}
+
+/* Slide-in (open) */
+.open {
+  transform: translateX(0); /* Slide in */
+}
+
+/* Slide-out (closed) */
+.close {
+  transform: translateX(-100%); /* Slide out */
+}

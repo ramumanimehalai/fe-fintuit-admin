@@ -1,0 +1,59 @@
+<div>
+  <div class="header-container d-flex justify-content-between align-items-center">
+    <h2 class="m-0">New Email Template</h2>
+    <div class="d-flex align-items-center">
+      <app-ds-button varient="light" class="me-2">close</app-ds-button>
+      <app-ds-button class="me-2" (click)="save()">save & close</app-ds-button>
+      <p class="mb-0">Icon</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="container-fluid form-container">
+    <div class="row h-100 mx-2 mt-2">
+      <div class="col-12 col-lg-7">
+        <div class="email-page-header">
+          <div class="header_marker"></div>
+          <div class="header_text">Email Template</div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-6 mb-3">
+            <app-input-textbox label="Template ID" placeholder="Enter Template ID"
+              [control]="getFormControl('templateId')"></app-input-textbox>
+          </div>
+          <div class="col-12 col-lg-6 mb-3">
+            <app-input-textbox label="Template Name" placeholder="Enter Template Name"
+              [control]="getFormControl('templateName')"></app-input-textbox>
+          </div>
+        </div>
+        <div class="col-12 mb-3">
+          <app-input-textbox label="Template Description" placeholder="Enter Template Description"
+            [control]="getFormControl('templateDescription')"></app-input-textbox>
+        </div>
+        <div class="col-12 mb-3">
+          <app-input-textbox label="Email Subject" placeholder="Enter Email Subject"
+            [control]="getFormControl('emailSubject')"></app-input-textbox>
+        </div>
+        <div class="col-12 mb-3">
+          <app-rich-text-editor label="Email Content"
+            (contentChange)="onRichTextContentChange($event)">
+          </app-rich-text-editor>
+        </div>
+      </div>
+      <div class="col-12 col-lg-5">
+        <div class="email-page-header">
+          <div class="templateheader_text">Email preview</div>
+        </div>
+        <div class="rectangular-box flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+          <h3>Preview of Email Content:</h3>
+          <div [innerHTML]="previewContent" class="email-preview"></div>
+          <div class="email-footer mt-5">
+            <div class="termscondition-header mb-2">Terms & Conditions</div>
+            <div class="terms-condition">Lorem ipsum dolor sit amet consectetur. Id sed etiam penatibus vitae
+              suspendisse odio a id at. Tempor amet dolor varius et in diam nec at ullamcorper. Adipiscing condimentum
+              turpis fames quisque eget. Neque elementum duis mauris non egestas mauris tincidunt integer.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

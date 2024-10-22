@@ -1,0 +1,30 @@
+<div class="login-wrapper">
+  <div class="login-container">
+    <form [formGroup]="form">
+      <div class="mt-2">
+        <app-input-textbox
+          label="Username"
+          placeholder="Enter the Username"
+          [control]="getFormControl('crediential')"
+        />
+      </div>
+      <div class="mt-2">
+        <app-input-textbox
+          label="Password"
+          placeholder="Enter the password"
+          [control]="getFormControl('password')"
+        />
+      </div>
+    </form>
+    <div class="button_container w-100 mt-2">
+      <app-ds-button (click)="handleOnClick()" class="ms-auto">
+        <div *ngIf="!isSubmitted; else loading">Login</div>
+        <ng-template #loading>
+          <div class="spinner-border spinner-border-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </ng-template>
+      </app-ds-button>
+    </div>
+  </div>
+</div>

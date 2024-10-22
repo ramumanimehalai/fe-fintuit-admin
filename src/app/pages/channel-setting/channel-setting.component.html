@@ -1,0 +1,57 @@
+<div>
+    <div class="channel-setting_container">
+        <div class="channel-setting__header">
+            <div class="channel-setting__header-text">Channel Settings</div>
+        </div>
+        <div class="channel-setting__divider"></div>
+        <div class="channel-setting__header-content">
+            <div>
+                <div class="channel-setting__header">
+                    <div class="channel-setting__title">Channel configuration details</div>
+                </div>
+                <div class="channel-setting__header">
+                    <div class="channel-setting__custom-title">
+                        Manage your active and inactive channels across regions.
+                    </div>
+                </div>
+            </div>
+            <div>
+                <app-ds-button [type]="'button'" [size]="'medium'" varient="primary" (click)="navigateTo('/add-new-channel')">New Channel</app-ds-button>
+            </div>
+        </div>
+        <div>
+            <app-ds-table [columns]="columns" [data]="data" [cellTemplate]="modifyCell"></app-ds-table>
+            <!-- modify cell template -->
+            <ng-template #modifyCell let-cellValue let-row="row" let-col="col">
+                <ng-container *ngIf="col === 'id'">
+                    {{ cellValue }}
+                </ng-container>
+
+                <ng-container *ngIf="col === 'region'">
+                    <span [style.color]="cellValue > 28 ? 'red' : 'black'">{{ cellValue }}</span>
+                </ng-container>
+                <ng-container *ngIf="col === 'channel'">
+                    <ng-container *ngIf="cellValue instanceof Array">
+                        <div class="badge-style">
+                            <ng-container *ngFor="let channel of cellValue">
+                                <app-ds-badge icon="alert-circle" iconPosition="left" [label]="channel"
+                                    [varient]="getChannelVariant(channel)"></app-ds-badge>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="col === 'status'">
+                    <div class="toggle-cell">
+                        <app-ds-toggle [size]="'medium'" varient="info" [isChecked]="cellValue === 'true'"
+                        (toggleChange)="toggleStatus(row)"></app-ds-toggle>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="col === 'actions'">
+                    <app-ds-dropdwon-popup icon="alert-circle" varient="info" [iconSize]="15" (onSelected)="onButtonClicked($event)"
+                        position="bottom" [options]="dropDownOptions">
+                    </app-ds-dropdwon-popup>
+                </ng-container>
+            </ng-template>
+        </div>
+    </div>
+</div>
