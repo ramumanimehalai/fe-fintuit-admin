@@ -3,7 +3,7 @@ import { HeaderComponent } from '../header/header.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { RouterOutlet } from '@angular/router';
 import { MainSidebarComponent } from '../main-sidebar/main-sidebar.component';
-import { StateService } from '../../Service/state.service';
+import { StateService } from '../../service/state.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

@@ -14,8 +14,7 @@ export class SecureStorageService {
     localStorage.setItem(key, JSON.stringify(Obj));
   }
   getItem(value: string) {
-    // let decryptData=this.CryptoKey.Decrypt(value)
-    let Object: any = localStorage.getItem(value);
+    const Object: any = localStorage.getItem(value);
     return JSON.parse(Object);
   }
   delete() {

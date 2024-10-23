@@ -7,7 +7,7 @@ import {
 } from '@angular/router';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { SecureStorageService } from '../Service/securestorage.service';
+import { SecureStorageService } from '../service/securestorage.service';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({

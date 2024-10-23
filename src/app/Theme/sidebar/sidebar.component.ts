@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, effect, OnInit } from '@angular/core';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { StateService } from '../../Service/state.service';
+import { StateService } from '../../service/state.service';
 import { Router } from '@angular/router';
 import { sidebarContent } from '../../config/constant';
 @Component({

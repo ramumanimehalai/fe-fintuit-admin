@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SecureStorageService } from '../../Service/securestorage.service';
-import {} from '../../Service/state.service';
+import { SecureStorageService } from '../../service/securestorage.service';
 import { CookieService } from 'ngx-cookie-service';
 import {
   FormControl,
@@ -9,7 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ApiService } from '../../Service/api.service';
+import { ApiService } from '../../service/api.service';
 import { ApiUrl } from '../../config/apiUrl';
 import { DsButtonComponent } from 'jas-ui-lib';
 import { CommonModule } from '@angular/common';
@@ -61,7 +60,7 @@ export class LoginComponent implements OnInit {
     this.form.markAllAsTouched();
     if (this.form.valid) {
       this.isSubmitted = true;
-      let payload = {
+      const payload = {
         ...this.form.value,
       };
       this.apiservice.postData(ApiUrl.loginApi, payload).subscribe({
