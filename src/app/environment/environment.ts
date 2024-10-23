@@ -1,4 +1,4 @@
 export const environment = {
-  BaseUrl: 'https://accounting.fintuit.tech',
+  BaseUrl: 'https://jsonplaceholder.typicode.com',
   encriptKey: 'your encript key base 64',
 };

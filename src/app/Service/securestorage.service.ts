@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { authTokenKey } from '../constants/auth-constants';
 
 @Injectable({
   providedIn: 'root',
@@ -7,17 +8,11 @@ import { CookieService } from 'ngx-cookie-service';
 export class SecureStorageService {
   constructor(private secureStorage: CookieService) {}
 
-  setItem(key: string, message: any) {
-    localStorage.setItem(key, message);
+  setCookieStorage(res: any) {
+    // TODO: Dummy token for now
+    this.secureStorage.set(authTokenKey, res?.token || "dummy_token");
   }
-  setObj(key: string, Obj: object) {
-    localStorage.setItem(key, JSON.stringify(Obj));
-  }
-  getItem(value: string) {
-    // let decryptData=this.CryptoKey.Decrypt(value)
-    let Object: any = localStorage.getItem(value);
-    return JSON.parse(Object);
-  }
+
   delete() {
     this.secureStorage.deleteAll();
   }

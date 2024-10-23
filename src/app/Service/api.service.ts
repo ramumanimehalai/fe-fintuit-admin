@@ -1,66 +1,48 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { endPoint } from './endpoint.service';
+import { environment } from '../environment/environment';
+
+const domainUrl: string = environment.BaseUrl
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ApiService {
-  sidebarData = new BehaviorSubject<any>([]);
-  constructor(private http: HttpClient) {
-    this.sidebarData.next('sucribe');
+  endPointObj = endPoint;
+
+  constructor(private httpClient: HttpClient) { }
+
+  getEndpointWithDomain(url: string = "") {
+    return domainUrl + url;
   }
 
-  getSidebarData() {
-    return this.sidebarData.asObservable();
-  }
-  /**
-   * Fetch data from the API
-   * @param path
-   * @param data
-   * @returns  Observable<any> - An observable that contains the API response
-   */
-  postData(path: string, data: any): Observable<any> {
-    let requestOptions: any = {
-      observe: 'response',
-      withCredentials: false,
-    };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    return this.http.post(path, data, requestOptions);
+  getEndpointWithParams(endPoint: string = "", ...params: any[]) {
+    let iteration = 0
+    const urlWithParams = endPoint.replace(/:([a-zA-Z0-9]+)/g, (match, contents) => {
+      if (params[iteration]) {
+        contents = params[iteration]
+        iteration++
+      }
+      return contents
+    })
+    return this.getEndpointWithDomain(urlWithParams);
   }
 
-  /**
-   *getData data from the API
-   * @param path
-   * @param payload
-   * @returns  Observable<any> - An observable that contains the API response
-   */
-  getData(path: string, payload: any = {}): Observable<any> {
-    let params = new HttpParams();
-    params = payload ? params.appendAll(payload) : params;
-    console.log('params-->', params);
-    return this.http.get(path, { params, withCredentials: false });
+  //--------------------User-------------------//
+  onLogin(data: any) {
+    return this.httpClient.post(this.getEndpointWithDomain(this.endPointObj.authenticate.login), data)
   }
 
-  /**
-   *delete data from the API
-   * @param path
-   * @param id
-   * @returns  Observable<any> - An observable that contains the API response
-   */
-  delete(path: string, id: string): Observable<any> {
-    return this.http.delete(`${path + '/' + id} `);
+  getUser() {
+    return this.httpClient.get(this.getEndpointWithDomain(this.endPointObj.user.getUser))
   }
 
-  /**
-   *Update data from the API
-   * @param path
-   * @param data
-   * @returns  Observable<any> - An observable that contains the API response
-   */
-  putData(path: string, data: any = {}): Observable<any> {
-    return this.http.put(path, data);
+  getAllUsers(queryParams = {}) {
+    return this.httpClient.get(this.getEndpointWithDomain(this.endPointObj.user.list), { params: queryParams })
+  }
+
+  getUserByEmailId(emailId: string) {
+    return this.httpClient.get(this.getEndpointWithParams(this.endPointObj.user.update, emailId))
   }
 }

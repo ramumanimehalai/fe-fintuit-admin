@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SecureStorageService } from '../../Service/securestorage.service';
-import {} from '../../Service/state.service';
-import { CookieService } from 'ngx-cookie-service';
+import { SecureStorageService } from '../../service/securestorage.service';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ApiService } from '../../Service/api.service';
-import { ApiUrl } from '../../config/apiUrl';
+import { ApiService } from '../../service/api.service';
 import { DsButtonComponent } from 'jas-ui-lib';
 import { CommonModule } from '@angular/common';
 import { InputTextboxComponent } from '../../shared/components/input-textbox/input-textbox.component';
@@ -34,7 +31,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private route: Router,
     private storage: SecureStorageService,
-    private cookieService: CookieService,
     private apiservice: ApiService,
   ) {
     this.createForm();
@@ -42,11 +38,11 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
   createForm() {
     this.form = new FormGroup({
-      crediential: new FormControl('zignifyadmin@gmail.com', [
+      crediential: new FormControl('admin@gmail.com', [
         Validators.required,
         Validators.email,
       ]),
-      password: new FormControl('English@1822', [
+      password: new FormControl('Admin@123', [
         Validators.required,
         Validators.minLength(3),
       ]),
@@ -61,15 +57,15 @@ export class LoginComponent implements OnInit {
     this.form.markAllAsTouched();
     if (this.form.valid) {
       this.isSubmitted = true;
-      let payload = {
+      const payload = {
         ...this.form.value,
       };
-      this.apiservice.postData(ApiUrl.loginApi, payload).subscribe({
+      this.apiservice.onLogin(payload).subscribe({
         next: (res) => {
-          if (res?.status == 200) {
-            this.setCookieStorage(res);
-            this.setLocalStorage();
-          }
+          console.log('====================================');
+          console.log(res);
+          console.log('====================================');
+            this.storage.setCookieStorage(res);
         },
         error: (error) => {
           this.isSubmitted = false;
@@ -80,21 +76,5 @@ export class LoginComponent implements OnInit {
         },
       });
     }
-  }
-
-  setLocalStorage() {
-    if (this.cookieService.get('token')) {
-      this.storage.setItem('auth', true);
-    }
-  }
-  setCookieStorage(res: any) {
-    this.cookieService.set('token', res.body.token);
-    this.cookieService.set('organization_id', res.body.tenant.organization_id);
-    this.cookieService.set(
-      'authenticated_user_id',
-      res.body.user.id.toString(),
-    );
-    this.cookieService.set('locale', res.body.tenant.metadata.language || 'en');
-    this.cookieService.set('tenant_id', res.body.tenant.id.toString());
   }
 }
