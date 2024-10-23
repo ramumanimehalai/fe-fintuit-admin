@@ -1,6 +1,11 @@
 export const endPoint = {
     authenticate: {
-      login: "/api/auth/login",
+      login: "/todos",
     },
+    user: {
+        getUser: "/user",
+        list: "/user/list",
+        update: "/user/:emailId",
+      },
   }
   

@@ -34,19 +34,15 @@ export class ApiService {
     return this.httpClient.post(this.getEndpointWithDomain(this.endPointObj.authenticate.login), data)
   }
 
-  // getUser() {
-  //   return this.httpClient.get(this.getEndpointWithDomain(this.endPointObj.user.getUser))
-  // }
+  getUser() {
+    return this.httpClient.get(this.getEndpointWithDomain(this.endPointObj.user.getUser))
+  }
 
-  // getAllUsers(queryParams = {}) {
-  //   return this.httpClient.get(this.getEndpointWithDomain(this.endPointObj.user.list), { params: queryParams })
-  // }
+  getAllUsers(queryParams = {}) {
+    return this.httpClient.get(this.getEndpointWithDomain(this.endPointObj.user.list), { params: queryParams })
+  }
 
-  // deactivateUser(emailId: string) {
-  //   return this.httpClient.delete(this.getEndpointWithParams(this.endPointObj.user.update, emailId))
-  // }
-
-  // activateUser(emailId: string) {
-  //   return this.httpClient.patch(this.getEndpointWithParams(this.endPointObj.user.update, emailId), { shouldActivate: true })
-  // }
+  getUserByEmailId(emailId: string) {
+    return this.httpClient.get(this.getEndpointWithParams(this.endPointObj.user.update, emailId))
+  }
 }

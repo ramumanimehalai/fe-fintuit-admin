@@ -26,20 +26,6 @@ export class LoggingInterceptor implements HttpInterceptor {
         this.cookieService.get(authTokenKey),
       );
     }
-    if (this.cookieService.get('organization_id')) {
-      clonedRequest = this.addCredential(
-        clonedRequest,
-        'organization-id',
-        this.cookieService.get('organization_id'),
-      );
-    }
-    if (this.cookieService.get('Accept-Language')) {
-      clonedRequest = this.addCredential(
-        clonedRequest,
-        'Accept-Language',
-        this.cookieService.get('Accept-Language'),
-      );
-    }
 
     return handler.handle(clonedRequest).pipe(
       tap({

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SecureStorageService } from '../../service/securestorage.service';
-import { CookieService } from 'ngx-cookie-service';
 import {
   FormControl,
   FormGroup,
@@ -12,7 +11,6 @@ import { ApiService } from '../../service/api.service';
 import { DsButtonComponent } from 'jas-ui-lib';
 import { CommonModule } from '@angular/common';
 import { InputTextboxComponent } from '../../shared/components/input-textbox/input-textbox.component';
-import { authTokenKey } from '../../constants/auth-constants';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +31,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private route: Router,
     private storage: SecureStorageService,
-    private cookieService: CookieService,
     private apiservice: ApiService,
   ) {
     this.createForm();
@@ -41,11 +38,11 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
   createForm() {
     this.form = new FormGroup({
-      crediential: new FormControl('zignifyadmin@gmail.com', [
+      crediential: new FormControl('admin@gmail.com', [
         Validators.required,
         Validators.email,
       ]),
-      password: new FormControl('English@1822', [
+      password: new FormControl('Admin@123', [
         Validators.required,
         Validators.minLength(3),
       ]),
@@ -65,8 +62,10 @@ export class LoginComponent implements OnInit {
       };
       this.apiservice.onLogin(payload).subscribe({
         next: (res) => {
-            this.setCookieStorage(res);
-            this.setLocalStorage();
+          console.log('====================================');
+          console.log(res);
+          console.log('====================================');
+            this.storage.setCookieStorage(res);
         },
         error: (error) => {
           this.isSubmitted = false;
@@ -77,21 +76,5 @@ export class LoginComponent implements OnInit {
         },
       });
     }
-  }
-
-  setLocalStorage() {
-    if (this.cookieService.get(authTokenKey)) {
-      this.storage.setItem('auth', true);
-    }
-  }
-  setCookieStorage(res: any) {
-    this.cookieService.set(authTokenKey, res.token);
-    this.cookieService.set('organization_id', res.tenant.organization_id);
-    this.cookieService.set(
-      'authenticated_user_id',
-      res.user.id.toString(),
-    );
-    this.cookieService.set('locale', res.tenant.metadata.language || 'en');
-    this.cookieService.set('tenant_id', res.tenant.id.toString());
   }
 }
