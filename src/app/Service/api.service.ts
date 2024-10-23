@@ -34,15 +34,7 @@ export class ApiService {
     return this.httpClient.post(this.getEndpointWithDomain(this.endPointObj.authenticate.login), data)
   }
 
-  getUser() {
-    return this.httpClient.get(this.getEndpointWithDomain(this.endPointObj.user.getUser))
-  }
-
-  getAllUsers(queryParams = {}) {
-    return this.httpClient.get(this.getEndpointWithDomain(this.endPointObj.user.list), { params: queryParams })
-  }
-
-  getUserByEmailId(emailId: string) {
-    return this.httpClient.get(this.getEndpointWithParams(this.endPointObj.user.update, emailId))
+  getAllChannels() {
+    return this.httpClient.get(this.getEndpointWithDomain(this.endPointObj.channels.list))
   }
 }
