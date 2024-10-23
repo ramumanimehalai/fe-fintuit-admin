@@ -1,6 +1,7 @@
 import { CanActivate, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { authTokenKey } from '../Authentication/constants/auth-constants';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class UnAuthGuard implements CanActivate {
   ) {}
 
   canActivate(): boolean {
-    const authState: any = this.cookieService.get('token') ? true : false;
+    const authState: any = this.cookieService.get(authTokenKey) ? true : false;
 
     if (authState) {
       this.router.navigateByUrl('');

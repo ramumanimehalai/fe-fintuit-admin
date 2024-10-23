@@ -13,6 +13,7 @@ import { ApiUrl } from '../../config/apiUrl';
 import { DsButtonComponent } from 'jas-ui-lib';
 import { CommonModule } from '@angular/common';
 import { InputTextboxComponent } from '../../shared/components/input-textbox/input-textbox.component';
+import { authTokenKey } from '../constants/auth-constants';
 
 @Component({
   selector: 'app-login',
@@ -82,12 +83,12 @@ export class LoginComponent implements OnInit {
   }
 
   setLocalStorage() {
-    if (this.cookieService.get('token')) {
+    if (this.cookieService.get(authTokenKey)) {
       this.storage.setItem('auth', true);
     }
   }
   setCookieStorage(res: any) {
-    this.cookieService.set('token', res.body.token);
+    this.cookieService.set(authTokenKey, res.body.token);
     this.cookieService.set('organization_id', res.body.tenant.organization_id);
     this.cookieService.set(
       'authenticated_user_id',

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { SecureStorageService } from '../service/securestorage.service';
 import { CookieService } from 'ngx-cookie-service';
+import { authTokenKey } from '../Authentication/constants/auth-constants';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,7 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): MaybeAsync<GuardResult> {
-    const authState = this.cookieService.get('token') ? true : false;
+    const authState = this.cookieService.get(authTokenKey) ? true : false;
     if (!authState) {
       this.secureStorage.delete();
       this.router.navigateByUrl('/auth/login');

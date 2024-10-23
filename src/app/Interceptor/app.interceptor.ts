@@ -7,6 +7,7 @@ import {
 import { Injectable } from '@angular/core';
 import { finalize, Observable, tap } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { authTokenKey } from '../Authentication/constants/auth-constants';
 
 @Injectable()
 export class LoggingInterceptor implements HttpInterceptor {
@@ -18,11 +19,11 @@ export class LoggingInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     let clonedRequest = req;
 
-    if (this.cookieService.get('token')) {
+    if (this.cookieService.get(authTokenKey)) {
       clonedRequest = this.addCredential(
         clonedRequest,
         'X-Access-Token',
-        this.cookieService.get('token'),
+        this.cookieService.get(authTokenKey),
       );
     }
     if (this.cookieService.get('organization_id')) {
