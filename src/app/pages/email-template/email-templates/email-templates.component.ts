@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { DsButtonComponent, DsIconComponent } from 'jas-ui-lib';
+import { DsButtonComponent, DsDropdwonPopupComponent, DsIconComponent } from 'jas-ui-lib';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 interface EmailTemplate {
   title: string;
@@ -13,7 +14,7 @@ interface EmailTemplate {
 @Component({
   selector: 'app-email-templates',
   standalone: true,
-  imports: [DsButtonComponent, DsIconComponent, CommonModule],
+  imports: [DsButtonComponent, DsIconComponent, CommonModule,MatTooltipModule, DsDropdwonPopupComponent],
   templateUrl: './email-templates.component.html',
   styleUrl: './email-templates.component.scss',
 })
@@ -47,10 +48,19 @@ export class EmailtemplateComponent implements OnInit {
     ];
   }
 
+  dropDownOptions = [
+    { label: 'Edit', key: 'edit' },
+    { label: 'Delete', key: 'delete' },
+    { label: 'Pause', key: 'pause' }
+  ];
+
   get isEmptyList() {
     return !this.emailTemplates.length;
   }
   navigateTo(url: string) {
     this.route.navigateByUrl(url);
+  }
+  onButtonClicked(event: any): void {
+    console.log('Dropdown option selected:', event);
   }
 }

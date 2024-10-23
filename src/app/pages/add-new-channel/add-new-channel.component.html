@@ -15,21 +15,21 @@
           <div class="header_marker"></div>
           <div class="header_text">Channel Configuration</div>
         </div>
-        <div class="col-12 mb-3">
+        <div class="col-6 mb-3">
           <app-input-textbox label="API Endpoint" placeholder="Enter API Endpoint"
-            [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
+            [control]="getAuthorizationConfig('apiEndpoint')"></app-input-textbox>
         </div>
         <div class="col-6 mb-3">
           <label for="region">Method</label>
           <select id="region" class="form-control mt-1" (input)="onSelectMethod($event)">
             <option value="" disabled>Select Method</option>
-            <option value="us">Get</option>
-            <option value="eu">POST</option>
+            <option value="Get">Get</option>
+            <option value="POST">POST</option>
           </select>
         </div>
         <div class="col-6 mb-3">
-          <label for="region">Authorization</label>
-          <select id="region" class="form-control mt-1" (input)="onSelectAuthorization($event)">
+          <label for="authorization">Authorization</label>
+          <select id="authorization" class="form-control mt-1" (input)="onSelectAuthorization($event)">
             <option value="" disabled>Select Authorization</option>
             <option value="No Auth">No Auth</option>
             <option value="Basic Auth">Basic Auth</option>
@@ -38,248 +38,119 @@
           </select>
         </div>
         <div>
-          <div *ngIf="selectedAuth !== 'No Auth'">
-            <div class="col-6 mb-3" *ngIf="selectedAuth === 'Basic Auth' || selectedAuth === 'API Key'">
+          <div *ngIf="selectedAuth === 'Basic Auth'">
+            <div class="col-6 mb-3">
               <app-input-textbox label="Username" placeholder="Enter username"
-                [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
+                [control]="getAuthorizationConfig('username')"></app-input-textbox>
             </div>
-            <div class="col-6 mb-3" *ngIf="selectedAuth === 'Basic Auth' || selectedAuth === 'API Key'">
+            <div class="col-6 mb-3">
               <app-input-textbox label="Password" placeholder="Enter password"
-                [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
+                [control]="getAuthorizationConfig('password')"></app-input-textbox>
             </div>
           </div>
-          <div>
-            <div class="col-6 mb-3 " *ngIf="selectedAuth === 'Bearer token'">
+          <div *ngIf="selectedAuth === 'Bearer token'">
+            <div class="col-6 mb-3">
               <app-input-textbox label="Token" placeholder="Enter token"
-                [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
+                [control]="getAuthorizationConfig('token')"></app-input-textbox>
             </div>
           </div>
           <div *ngIf="selectedAuth === 'API Key'">
-            <div class="col-6 mb-3" >
+            <div class="col-6 mb-3">
               <app-input-textbox label="Key" placeholder="Enter key"
-                [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
+                [control]="getAuthorizationConfig('key')"></app-input-textbox>
             </div>
             <div class="col-6 mb-3">
               <app-input-textbox label="Value" placeholder="Enter value"
-                [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
+                [control]="getAuthorizationConfig('value')"></app-input-textbox>
             </div>
             <div class="col-6 mb-3">
               <label for="region">Add to</label>
-              <select id="region" class="form-control mt-1" (input)="onSelectAuthorization($event)">
+              <select id="region" class="form-control mt-1">
                 <option value="" disabled>Large Select</option>
-                <option value="us">Query Params</option>
-                <option value="eu">Header</option>
+                <option value="Query Params">Query Params</option>
+                <option value="Header">Header</option>
               </select>
             </div>
           </div>
         </div>
-        <!-- <div class="col-10 mb-3">
-          <label for="chooseChannel" class="mb-3">Choose Channels</label>
-          <div class="row mb-3">
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
-              <div class="box d-flex align-items-center justify-content-between" [ngClass]="{'active-background': toggleStates['Email']}">
-                <div class="d-flex align-items-center">
-                  <app-ds-icon icon="alert-circle" [size]="15" variant="primary"></app-ds-icon>
-                  <div class="ms-2">Email</div>
-                </div>
-                <app-ds-toggle [isChecked]="toggleStates['Email']" [activeLabel]="''" [inactiveLabel]="''" (toggleChange)="toggle('Email')"></app-ds-toggle>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
-              <div class="box d-flex align-items-center justify-content-between" [ngClass]="{'active-background': toggleStates['textMessage']}">
-                <div class="d-flex align-items-center">
-                  <app-ds-icon icon="alert-circle" [size]="15" variant="primary"></app-ds-icon>
-                  <div class="ms-2">Text Message</div>
-                </div>
-                <app-ds-toggle  [isChecked]="toggleStates['textMessage']"  [activeLabel]="''" [inactiveLabel]="''" (toggleChange)="toggle('textMessage')"></app-ds-toggle>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
-              <div class="box d-flex align-items-center justify-content-between" [ngClass]="{'active-background': toggleStates['whatsapp']}">
-                <div class="d-flex align-items-center">
-                  <app-ds-icon icon="alert-circle" [size]="15" variant="primary"></app-ds-icon>
-                  <div class="ms-2">whatsapp</div>
-                </div>
-                <app-ds-toggle  [isChecked]="toggleStates['whatsapp']"  [activeLabel]="''" [inactiveLabel]="''" (toggleChange)="toggle('whatsapp')"></app-ds-toggle>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
-              <div class="box d-flex align-items-center justify-content-between" [ngClass]="{'active-background': toggleStates['notification']}">
-                <div class="d-flex align-items-center">
-                  <app-ds-icon icon="alert-circle" [size]="15" variant="primary"></app-ds-icon>
-                  <div class="ms-2">Notification</div>
-                </div>
-                <app-ds-toggle [isChecked]="toggleStates['notification']"  [activeLabel]="''" [inactiveLabel]="''" (toggleChange)="toggle('notification')" ></app-ds-toggle>
-              </div>
-            </div>
-          </div>
-        </div> -->
         <div class="col-12 mb-3">
           <!-- <label>Select Channels</label> -->
           <div>
-            <div class="form-check">
-              <input type="checkbox" [formControl]="getChannelControl('email')" class="form-check-input"
-                id="emailChannel" />
+            <div class="form-check mb-3">
+              <input type="checkbox" [formControl]="getChannelControl('custom_heder')" class="form-check-input"
+                id="emailChannel" (change)="onCustomHeaderChange($event)" />
               <label class="form-check-label" for="emailChannel">Custom Header</label>
             </div>
-            <div class="form-check">
-              <input type="checkbox" [formControl]="getChannelControl('sms')" class="form-check-input"
-                id="smsChannel" />
-              <label class="form-check-label" for="smsChannel">Request Header</label>
+            <div *ngIf="getChannelControl('custom_heder').value">
+              <ng-container *ngFor="let item of customHeaderItem; let i = index">
+                <div class="row mb-3 ">
+                  <div class="col-3">
+                    <app-input-textbox label="Key" placeholder="Enter Key"
+                      [control]="getEmailConfigControl('smtpUserName')"></app-input-textbox>
+                  </div>
+                  <div class="col-3">
+                    <app-input-textbox label="Value" placeholder="Enter Value"
+                      [control]="getEmailConfigControl('smtpPassword')"></app-input-textbox>
+                  </div>
+                  <div class="col-3 d-flex justify-content-start align-items-end">
+                    <app-ds-button type="button" (click)="addCustomHeader($event)">+</app-ds-button>
+                    <app-ds-button type="button" class="ms-1" (click)="removeCustomHeader($event, i)"
+                      varient="light">-</app-ds-button>
+                  </div>
+                </div>
+              </ng-container>
             </div>
-            <div class="form-check">
-              <input type="checkbox" [formControl]="getChannelControl('whatsapp')" class="form-check-input"
-                id="whatsappChannel" />
-              <label class="form-check-label" for="whatsappChannel">Response Header</label>
+            <div class="form-check mb-3">
+              <input type="checkbox" [formControl]="getChannelControl('request_mapping')" class="form-check-input"
+                (change)="onRequestMapping($event)" id="smsChannel" />
+              <label class="form-check-label" for="smsChannel">Request Mapping</label>
             </div>
-            <!-- <div class="form-check">
-              <input
-                type="checkbox"
-                [formControl]="getChannelControl('pushNotifications')"
-                class="form-check-input"
-                id="pushNotificationsChannel"
-              />
-              <label class="form-check-label" for="pushNotificationsChannel"
-                >Push Notifications</label
-              >
-            </div> -->
+            <div *ngIf="getChannelControl('request_mapping').value">
+              <ng-container *ngFor="let item of requestMappingItem; let i = index">
+                <div class="row mb-3 ">
+                  <div class="col-3">
+                    <app-input-textbox label="Data Field" placeholder="Enter Datafield"
+                      [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
+                  </div>
+                  <div class="col-3">
+                    <app-input-textbox label="Map to" placeholder="Enter Mapto"
+                      [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
+                  </div>
+                  <div class="col-6 d-flex justify-content-start align-self-end">
+                    <app-ds-button type="button" (click)="addRequestMapping($event)">+</app-ds-button>
+                    <app-ds-button type="button" class="ms-1" (click)="removeRequestMapping($event,i)"
+                      varient="light">-</app-ds-button>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div class="form-check mb-3">
+              <input type="checkbox" [formControl]="getChannelControl('response_mapping')" class="form-check-input"
+                id="whatsappChannel" (change)="onResponseMapping($event)"/>
+              <label class="form-check-label" for="whatsappChannel">Response Mapping</label>
+            </div>
+            <div *ngIf="getChannelControl('response_mapping').value">
+              <ng-container *ngFor="let item of responseMappingItem; let i = index">
+                <div class="row mb-3 " *ngIf="getChannelControl('response_mapping').value">
+                  <div class="col-3">
+                    <app-input-textbox label="Data Field" placeholder="Enter Datafield"
+                      [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
+                  </div>
+                  <div class="col-3">
+                    <app-input-textbox label="Map to" placeholder="Enter Mapto"
+                      [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
+                  </div>
+                  <div class="col-6 d-flex justify-content-start align-self-end">
+                    <app-ds-button type="button" (click)="addResponseMapping($event)">+</app-ds-button>
+                    <app-ds-button type="button" class="ms-1" (click)="removeResponseMapping($event,i)"
+                      varient="light">-</app-ds-button>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="col-6">
-      <mat-tab-group>
-        <mat-tab label="Email">
-          <div class="col-12 mt-4">
-            <div class="col-12 mb-3">
-              <app-input-textbox label="SMTP server" placeholder="smtp server"
-                [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
-            </div>
-            <div class="col-12 mb-3">
-              <app-input-textbox label="SMTP port" placeholder="smtp port"
-                [control]="getEmailConfigControl('smtpPort')"></app-input-textbox>
-            </div>
-            <div class="col-12 mb-3">
-              <app-input-textbox label="SMTP username" placeholder="smtp username"
-                [control]="getEmailConfigControl('smtpUserName')"></app-input-textbox>
-            </div>
-            <div class="col-12 mb-3">
-              <app-input-textbox label="SMTP password" placeholder="smtp password"
-                [control]="getEmailConfigControl('smtpPassword')"></app-input-textbox>
-            </div>
-            <div class="col-12 mb-3">
-              <app-input-textbox label="Sender name" placeholder="sender name"
-                [control]="getEmailConfigControl('senderName')"></app-input-textbox>
-            </div>
-            <div class="col-12">
-              <app-input-textbox label="Sender email" placeholder="sender email"
-                [control]="getEmailConfigControl('senderEmail')"></app-input-textbox>
-            </div>
-            <div class="col-12 mt-1 d-flex justify-content-between mb-3">
-              <div class="form-check ms-1">
-                <input type="checkbox" [formControl]="getEmailConfigControl('enableTLS')" class="form-check-input"
-                  id="enableTLS" />
-                <label class="form-check-label" for="enableTLS">Enable TLS
-                </label>
-              </div>
-              <div class="form-check">
-                <input type="checkbox" [formControl]="getEmailConfigControl('active')" class="form-check-input"
-                  id="emailConfigActive" />
-                <label class="form-check-label" for="emailConfigActive">Active</label>
-              </div>
-            </div>
-            <div class="col-6 d-flex mb-3">
-              <app-ds-button varient="light">close</app-ds-button>
-              <app-ds-button class="ms-1">save</app-ds-button>
-            </div>
-          </div>
-        </mat-tab>
-
-        <mat-tab label="SMS">
-          <div class="col-12 mt-4">
-            <div class="col-12 mb-3">
-              <app-input-textbox label="Account SSID" placeholder="account ssid"
-                [control]="getSmsConfigControl('accountSSID')"></app-input-textbox>
-            </div>
-            <div class="col-12 mb-3">
-              <app-input-textbox label="Auth token" placeholder="auth token"
-                [control]="getSmsConfigControl('authToken')"></app-input-textbox>
-            </div>
-            <div class="col-12">
-              <app-input-textbox label="Phone number" placeholder="phone number"
-                [control]="getSmsConfigControl('phoneNumber')"></app-input-textbox>
-            </div>
-            <div class="col-12 mt-1 mb-3">
-              <div class="form-check ms-1">
-                <input type="checkbox" [formControl]="getSmsConfigControl('active')" class="form-check-input"
-                  id="smsConfigActive" />
-                <label class="form-check-label" for="smsConfigActive">Active</label>
-              </div>
-            </div>
-            <div class="col-6 d-flex mb-3">
-              <app-ds-button varient="light">close</app-ds-button>
-              <app-ds-button class="ms-1">save</app-ds-button>
-            </div>
-          </div>
-        </mat-tab>
-
-        <mat-tab label="Whatsapp">
-          <div class="col-12 mt-4">
-            <div class="col-12 mb-3">
-              <app-input-textbox label="API endpoint" placeholder="api endpoint"
-                [control]="getWhatsappConfigControl('apiEndpoint')"></app-input-textbox>
-            </div>
-            <div class="col-12 mb-3">
-              <app-input-textbox label="Account SSID" placeholder="account ssid"
-                [control]="getWhatsappConfigControl('accountSSID')"></app-input-textbox>
-            </div>
-            <div class="col-12 mb-3">
-              <app-input-textbox label="Auth token" placeholder="auth token"
-                [control]="getWhatsappConfigControl('authToken')"></app-input-textbox>
-            </div>
-            <div class="col-12">
-              <app-input-textbox label="WhatsApp number" placeholder="whatsapp number"
-                [control]="getWhatsappConfigControl('whatsappNumber')"></app-input-textbox>
-            </div>
-            <div class="col-12 mt-1 mb-3">
-              <div class="form-check ms-1">
-                <input type="checkbox" [formControl]="getSmsConfigControl('active')" class="form-check-input"
-                  id="whatsappConfigActive" />
-                <label class="form-check-label" for="whatsappConfigActive">Active</label>
-              </div>
-            </div>
-            <div class="col-6 d-flex mb-3">
-              <app-ds-button varient="light">close</app-ds-button>
-              <app-ds-button class="ms-1">save</app-ds-button>
-            </div>
-          </div>
-        </mat-tab>
-
-        <mat-tab label="Push Notifications">
-          <div class="col-12 mt-4">
-            <div class="col-12 mb-3">
-              <app-input-textbox label="FCM server key" placeholder="fcm server key"
-                [control]="getPushConfigControl('fcmServerKey')"></app-input-textbox>
-            </div>
-            <div class="col-12">
-              <app-input-textbox label="FCM sender ID" placeholder="fcm sender id"
-                [control]="getPushConfigControl('fcmSenderId')"></app-input-textbox>
-            </div>
-            <div class="col-12 mt-1 mb-3">
-              <div class="form-check ms-1">
-                <input type="checkbox" [formControl]="getSmsConfigControl('active')" class="form-check-input"
-                  id="pushConfigActive" />
-                <label class="form-check-label" for="pushConfigActive">Active</label>
-              </div>
-            </div>
-            <div class="col-6 d-flex mb-3">
-              <app-ds-button varient="light">close</app-ds-button>
-              <app-ds-button class="ms-1">save</app-ds-button>
-            </div>
-          </div>
-        </mat-tab>
-      </mat-tab-group>
     </div>
   </div>
 </div>

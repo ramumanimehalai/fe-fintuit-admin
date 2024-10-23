@@ -45,6 +45,7 @@
     margin-bottom: 15px;
   }
   .truncated-text {
+    cursor: pointer;
    @extend .common-truncated-text 
   }
   
