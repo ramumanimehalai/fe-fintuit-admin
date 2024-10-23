@@ -7,6 +7,7 @@ import {
 import { Injectable } from '@angular/core';
 import { finalize, Observable, tap } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { authTokenKey } from '../constants/auth-constants';
 
 @Injectable()
 export class LoggingInterceptor implements HttpInterceptor {
@@ -18,32 +19,17 @@ export class LoggingInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     let clonedRequest = req;
 
-    if (this.cookieService.get('token')) {
+    if (this.cookieService.get(authTokenKey)) {
       clonedRequest = this.addCredential(
         clonedRequest,
         'X-Access-Token',
-        this.cookieService.get('token'),
-      );
-    }
-    if (this.cookieService.get('organization_id')) {
-      clonedRequest = this.addCredential(
-        clonedRequest,
-        'organization-id',
-        this.cookieService.get('organization_id'),
-      );
-    }
-    if (this.cookieService.get('Accept-Language')) {
-      clonedRequest = this.addCredential(
-        clonedRequest,
-        'Accept-Language',
-        this.cookieService.get('Accept-Language'),
+        this.cookieService.get(authTokenKey),
       );
     }
 
     return handler.handle(clonedRequest).pipe(
       tap({
         next: (res) => {
-          // console.log('Response', res);
         },
         error: (error) => {
           if (error.status == 401) {

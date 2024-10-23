@@ -1,7 +1,7 @@
 import { Component, effect } from '@angular/core';
 
-import { StateService } from '../../Service/state.service';
-import { SecureStorageService } from '../../Service/securestorage.service';
+import { StateService } from '../../service/state.service';
+import { SecureStorageService } from '../../service/securestorage.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DsButtonComponent } from 'jas-ui-lib';

@@ -1,5 +1,3 @@
-import { tabs } from './Interface';
-
 export const sidebarContent = [
   {
     menu: [
