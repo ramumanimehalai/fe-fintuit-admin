@@ -34,7 +34,11 @@ export class ApiService {
     return this.httpClient.post(this.getEndpointWithDomain(this.endPointObj.authenticate.login), data)
   }
 
-  getAllChannels() {
-    return this.httpClient.get(this.getEndpointWithDomain(this.endPointObj.channels.list))
+  getAllChannels(queryParams = {}) {
+    const endpoint = this.getEndpointWithDomain(this.endPointObj.channels.list);
+    console.log('API Endpoint:', endpoint);
+    console.log('Query Parameters:', queryParams);
+    
+    return this.httpClient.get(endpoint, { params: queryParams });
   }
 }

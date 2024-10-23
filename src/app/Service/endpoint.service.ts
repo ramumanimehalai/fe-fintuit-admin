@@ -3,7 +3,7 @@ export const endPoint = {
       login: "/todos",
     },
     channels: {
-        list: "/channel/list",
+        list: "/notifications/v1/templates",
       },
   }
   

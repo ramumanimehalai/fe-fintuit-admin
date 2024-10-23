@@ -3,6 +3,7 @@ import { DsButtonComponent, DsDropdwonPopupComponent, DsIconComponent } from 'ja
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ApiService } from '../../../service/api.service';
 
 interface EmailTemplate {
   title: string;
@@ -19,35 +20,50 @@ interface EmailTemplate {
   styleUrl: './email-templates.component.scss',
 })
 export class EmailtemplateComponent implements OnInit {
-  constructor(private route: Router) {}
+  constructor(private route: Router, private apiService: ApiService) {}
   emailTemplates: EmailTemplate[] = [];
-
+  emailTemplateSettings =[];
   ngOnInit(): void {
+    this.emailTemplatesSettings()
     this.emailTemplates = [
-      {
-        title: 'New User Onboarding Email',
-        description:
-          'When a new user is added, an email has to be sent to the user with a password.',
-        templatecode: '102',
-        icon: 'icon', // replace with actual icon name if needed
-      },
-      {
-        title: 'New User Onboarding Email',
-        description:
-          'When a new user is added, an email has to be sent to the user with a password.',
-          templatecode: '102',
-        icon: 'icon', // replace with actual icon name if needed
-      },
-      {
-        title: 'New User Onboarding Email',
-        description:
-          'When a new user is added, an email has to be sent to the user with a password.',
-          templatecode: '102',
-        icon: 'icon', // replace with actual icon name if needed
-      },
+      // {
+      //   title: 'New User Onboarding Email',
+      //   description:
+      //     'When a new user is added, an email has to be sent to the user with a password.',
+      //   templatecode: '102',
+      //   icon: 'icon', // replace with actual icon name if needed
+      // },
+      // {
+      //   title: 'New User Onboarding Email',
+      //   description:
+      //     'When a new user is added, an email has to be sent to the user with a password.',
+      //     templatecode: '102',
+      //   icon: 'icon', // replace with actual icon name if needed
+      // },
+      // {
+      //   title: 'New User Onboarding Email',
+      //   description:
+      //     'When a new user is added, an email has to be sent to the user with a password.',
+      //     templatecode: '102',
+      //   icon: 'icon', // replace with actual icon name if needed
+      // },
     ];
   }
-
+  emailTemplatesSettings(){
+    console.log('emailTemplatesSettings')
+  this.apiService.getAllChannels({page: 1, size: 10}).subscribe({
+    next: (res: any) => {
+      console.log(res,"responseValue")
+      this.emailTemplateSettings = res.data
+    },
+    error: (error) => {
+      console.error('error-->', error);
+    },
+    complete: () => {
+      // handle loaders
+    },
+  })
+  }
   dropDownOptions = [
     { label: 'Edit', key: 'edit' },
     { label: 'Delete', key: 'delete' },

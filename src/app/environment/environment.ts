@@ -1,4 +1,4 @@
 export const environment = {
-  BaseUrl: 'https://jsonplaceholder.typicode.com',
+  BaseUrl: 'http://192.168.1.14:8082',
   encriptKey: 'your encript key base 64',
 };

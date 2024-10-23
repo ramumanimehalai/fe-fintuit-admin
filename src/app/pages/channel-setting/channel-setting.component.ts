@@ -22,8 +22,10 @@ ngOnInit(): void {
 }
 
 loadChannels() {
-  this.apiService.getAllChannels().subscribe({
+  console.log('loadChannels')
+  this.apiService.getAllChannels({page: 1, size: 10}).subscribe({
     next: (res: any) => {
+      console.log(res,"responseValue")
       this.channelSettigs = res.data
     },
     error: (error) => {

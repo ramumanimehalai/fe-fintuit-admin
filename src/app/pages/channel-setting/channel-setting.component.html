@@ -34,7 +34,7 @@
                     <ng-container *ngIf="cellValue instanceof Array">
                         <div class="badge-style">
                             <ng-container *ngFor="let channel of cellValue">
-                                <app-ds-badge icon="alert-circle" iconPosition="left" [label]="channel"
+                                <app-ds-badge icon="" iconPosition="left" [label]="channel"
                                     [varient]="getChannelVariant(channel)"></app-ds-badge>
                             </ng-container>
                         </div>
@@ -47,7 +47,7 @@
                     </div>
                 </ng-container>
                 <ng-container *ngIf="col === 'actions'">
-                    <app-ds-dropdwon-popup icon="alert-circle" varient="info" [iconSize]="15" (onSelected)="onButtonClicked($event)"
+                    <app-ds-dropdwon-popup icon="" varient="info" [iconSize]="15" (onSelected)="onButtonClicked($event)"
                         position="bottom" [options]="dropDownOptions">
                     </app-ds-dropdwon-popup>
                 </ng-container>
