@@ -20,7 +20,7 @@
             </div>
         </div>
         <div>
-            <app-ds-table [columns]="columns" [data]="data" [cellTemplate]="modifyCell"></app-ds-table>
+            <app-ds-table [columns]="columns" [data]="channelSettigs" [cellTemplate]="modifyCell"></app-ds-table>
             <!-- modify cell template -->
             <ng-template #modifyCell let-cellValue let-row="row" let-col="col">
                 <ng-container *ngIf="col === 'id'">
