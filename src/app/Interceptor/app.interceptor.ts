@@ -7,7 +7,7 @@ import {
 import { Injectable } from '@angular/core';
 import { finalize, Observable, tap } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
-import { authTokenKey } from '../Authentication/constants/auth-constants';
+import { authTokenKey } from '../constants/auth-constants';
 
 @Injectable()
 export class LoggingInterceptor implements HttpInterceptor {
@@ -44,7 +44,6 @@ export class LoggingInterceptor implements HttpInterceptor {
     return handler.handle(clonedRequest).pipe(
       tap({
         next: (res) => {
-          // console.log('Response', res);
         },
         error: (error) => {
           if (error.status == 401) {

@@ -9,11 +9,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { ApiService } from '../../service/api.service';
-import { ApiUrl } from '../../config/apiUrl';
 import { DsButtonComponent } from 'jas-ui-lib';
 import { CommonModule } from '@angular/common';
 import { InputTextboxComponent } from '../../shared/components/input-textbox/input-textbox.component';
-import { authTokenKey } from '../constants/auth-constants';
+import { authTokenKey } from '../../constants/auth-constants';
 
 @Component({
   selector: 'app-login',
@@ -64,12 +63,10 @@ export class LoginComponent implements OnInit {
       const payload = {
         ...this.form.value,
       };
-      this.apiservice.postData(ApiUrl.loginApi, payload).subscribe({
+      this.apiservice.onLogin(payload).subscribe({
         next: (res) => {
-          if (res?.status == 200) {
             this.setCookieStorage(res);
             this.setLocalStorage();
-          }
         },
         error: (error) => {
           this.isSubmitted = false;
@@ -88,13 +85,13 @@ export class LoginComponent implements OnInit {
     }
   }
   setCookieStorage(res: any) {
-    this.cookieService.set(authTokenKey, res.body.token);
-    this.cookieService.set('organization_id', res.body.tenant.organization_id);
+    this.cookieService.set(authTokenKey, res.token);
+    this.cookieService.set('organization_id', res.tenant.organization_id);
     this.cookieService.set(
       'authenticated_user_id',
-      res.body.user.id.toString(),
+      res.user.id.toString(),
     );
-    this.cookieService.set('locale', res.body.tenant.metadata.language || 'en');
-    this.cookieService.set('tenant_id', res.body.tenant.id.toString());
+    this.cookieService.set('locale', res.tenant.metadata.language || 'en');
+    this.cookieService.set('tenant_id', res.tenant.id.toString());
   }
 }

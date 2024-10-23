@@ -18,6 +18,7 @@ export class SecureStorageService {
     return JSON.parse(Object);
   }
   delete() {
+    localStorage.clear()
     this.secureStorage.deleteAll();
   }
 }

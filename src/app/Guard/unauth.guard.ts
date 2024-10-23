@@ -1,7 +1,7 @@
 import { CanActivate, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { authTokenKey } from '../Authentication/constants/auth-constants';
+import { authTokenKey } from '../constants/auth-constants';
 
 @Injectable({
   providedIn: 'root',
