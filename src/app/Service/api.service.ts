@@ -34,19 +34,8 @@ export class ApiService {
     return this.httpClient.post(this.getEndpointWithDomain(this.endPointObj.authenticate.login), data)
   }
 
-  // getAllEmailTemplate(queryParams = {}) { 
-  //   const username = "root";
-  //   const password = "root";
-  //   const basicAuth = btoa(`${username}:${password}`);
 
-  //   const headers = {
-  //     'Authorization' : `Basic ${basicAuth}`
-  //   }
-  //   return this.httpClient.get(this.getEndpointWithDomain(this.endPointObj.channels.list), { headers, params: queryParams});
-    
-  // }
-
-  getAllEmailTemplate(queryParams: any) {  
+  getAllEmailTemplate(queryParams: any) {
     return this.httpClient.get(this.getEndpointWithDomain(this.endPointObj.channels.list), { params: queryParams });
   }
   createEmailTemplate(data: any) {
@@ -58,12 +47,12 @@ export class ApiService {
   }
   updateTemplateById(id: string, data: any) {
     const url = this.getEndpointWithParams(this.endPointObj.channels.updateTemplate, id);
-    
+
     // Log the URL and ID for debugging
     console.log('URL:', url);
     console.log('ID:', id);
-    
+
     return this.httpClient.put(url, data);
   }
-  
+
 }
