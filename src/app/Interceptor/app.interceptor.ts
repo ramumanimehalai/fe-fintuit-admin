@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { finalize, Observable, tap } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { authTokenKey } from '../constants/auth-constants';
+import { environment } from '../environment/environment';
 
 @Injectable()
 export class LoggingInterceptor implements HttpInterceptor {
@@ -26,6 +27,7 @@ export class LoggingInterceptor implements HttpInterceptor {
         this.cookieService.get(authTokenKey),
       );
     }
+    clonedRequest = this.addCredential(clonedRequest, 'Authorization', environment.encriptKey)
 
     return handler.handle(clonedRequest).pipe(
       tap({
