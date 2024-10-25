@@ -54,5 +54,11 @@ export class ApiService {
 
     return this.httpClient.put(url, data);
   }
+  // In api.service.ts
+deleteEmailTemplate(id: string) {
+  const url = `${this.getEndpointWithDomain(this.endPointObj.channels.deleteTemplate)}/${id}`;
+  return this.httpClient.delete(url); // Use DELETE method
+}
+
 
 }

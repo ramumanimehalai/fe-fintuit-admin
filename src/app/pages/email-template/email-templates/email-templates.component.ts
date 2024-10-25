@@ -77,9 +77,25 @@ export class EmailtemplateComponent implements OnInit {
   onButtonClicked(event: any, template: EmailTemplate): void {
     if (event === 'edit') {
       this.route.navigate([`/create-new-email-template/${template.templateCode}`]);
-    } else if (event.key && event.key === 'delete') {
-      console.log('Delete action for template:', template.templateCode);
+    } else if (event === 'delete') {
+      this.deleteTemplate(template.id);
     }
-  }  
+  }
+  deleteTemplate(id: string | undefined) {
+    if (id) {
+      console.log(id,"id")
+      this.apiService.deleteEmailTemplate(id).subscribe({
+        next: (response) => {
+          console.log('Template deleted successfully:', response);
+          this.emailTemplatesSettings()
+        },
+        error: (error) => {
+          console.error('Error deleting template:', error);
+        },
+      });
+    } else {
+      console.error('Template ID is undefined');
+    }
+  }
 }
 
