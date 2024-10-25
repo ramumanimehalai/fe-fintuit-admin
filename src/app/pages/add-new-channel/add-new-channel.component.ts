@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -51,6 +52,7 @@ export class AddNewChannelComponent {
         request_mapping: new FormControl(false), // SMS checkbox
         response_mapping: new FormControl(false), // WhatsApp checkbox
       }),
+      customHeaders: this.fb.array([]), // FormArray for custom headers
       emailConfig: this.fb.group({
         smtpServer: new FormControl('', Validators.required),
         smtpPort: new FormControl('', Validators.required),
@@ -101,7 +103,10 @@ export class AddNewChannelComponent {
     this.requestMappingItem.push({ dataField: '', mapTo: '' });
     this.responseMappingItem.push({ dataField: '', mapTo: '' });
   }
-
+  get customHeaders(): FormArray {
+    return this.configForm.get('customHeaders') as FormArray;
+  }
+  
   onSubmit() { }
 
   getFormControl(groupName: string, controlName: string): FormControl {

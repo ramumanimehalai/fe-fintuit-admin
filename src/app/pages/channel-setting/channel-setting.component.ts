@@ -18,24 +18,24 @@ constructor(private route: Router, private apiService: ApiService) {}
 channelSettigs = [];
 
 ngOnInit(): void {
-  this.loadChannels()
+  // this.loadChannels()
 }
 
-loadChannels() {
-  console.log('loadChannels')
-  this.apiService.getAllChannels({page: 1, size: 10}).subscribe({
-    next: (res: any) => {
-      console.log(res,"responseValue")
-      this.channelSettigs = res.data
-    },
-    error: (error) => {
-      console.error('error-->', error);
-    },
-    complete: () => {
-      // handle loaders
-    },
-  })
-}
+// loadChannels() {
+//   console.log('loadChannels')
+//   this.apiService.getAllChannels({page: 1, size: 10}).subscribe({
+//     next: (res: any) => {
+//       console.log(res,"responseValue")
+//       this.channelSettigs = res.data
+//     },
+//     error: (error) => {
+//       console.error('error-->', error);
+//     },
+//     complete: () => {
+//       // handle loaders
+//     },
+//   })
+// }
 
   columns = [
     { label: 'ID', key: 'id' },
@@ -44,11 +44,11 @@ loadChannels() {
     { label: 'Status', key: 'status' },
     { label: 'Actions', key: 'actions' }
   ];
-  // data = [
-  //   { id: '101', region: 'Europe', channel: ['Email','Push','whatsapp','SMS'], status: 'true' ,actions: ''},
-  //   { id: '102', region: 'Russia', channel: ['SMS','Email'], status: 'true',actions: ''},
-  //   { id: '103', region: 'United states of America', channel: ['whatsapp'], status: 'true',actions:  ''}
-  // ];
+  data = [
+    { id: '101', region: 'Europe', channel: ['Email','Push','whatsapp','SMS'], status: 'true' ,actions: ''},
+    { id: '102', region: 'Russia', channel: ['SMS','Email'], status: 'true',actions: ''},
+    { id: '103', region: 'United states of America', channel: ['whatsapp'], status: 'true',actions:  ''}
+  ];
   channelVariants: { [key: string]: Varient } = {
     'Email': 'primary',
     'Push': 'success',

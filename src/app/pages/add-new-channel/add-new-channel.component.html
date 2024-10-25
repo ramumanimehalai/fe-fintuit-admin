@@ -83,16 +83,16 @@
             </div>
             <div *ngIf="getChannelControl('custom_heder').value">
               <ng-container *ngFor="let item of customHeaderItem; let i = index">
-                <div class="row mb-3 ">
+                <div class="row mb-3">
                   <div class="col-3">
-                    <app-input-textbox label="Key" placeholder="Enter Key"
+                    <app-input-textbox  placeholder="Enter Key"
                       [control]="getEmailConfigControl('smtpUserName')"></app-input-textbox>
                   </div>
                   <div class="col-3">
-                    <app-input-textbox label="Value" placeholder="Enter Value"
+                    <app-input-textbox  placeholder="Enter Value"
                       [control]="getEmailConfigControl('smtpPassword')"></app-input-textbox>
                   </div>
-                  <div class="col-3 d-flex justify-content-start align-items-end">
+                  <div class="col-3  d-flex justify-content-start align-items-start ">
                     <app-ds-button type="button" (click)="addCustomHeader($event)">+</app-ds-button>
                     <app-ds-button type="button" class="ms-1" (click)="removeCustomHeader($event, i)"
                       varient="light">-</app-ds-button>
@@ -109,11 +109,11 @@
               <ng-container *ngFor="let item of requestMappingItem; let i = index">
                 <div class="row mb-3 ">
                   <div class="col-3">
-                    <app-input-textbox label="Data Field" placeholder="Enter Datafield"
+                    <app-input-textbox  placeholder="Enter Datafield"
                       [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
                   </div>
                   <div class="col-3">
-                    <app-input-textbox label="Map to" placeholder="Enter Mapto"
+                    <app-input-textbox  placeholder="Enter Mapto"
                       [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
                   </div>
                   <div class="col-6 d-flex justify-content-start align-self-end">
@@ -133,14 +133,14 @@
               <ng-container *ngFor="let item of responseMappingItem; let i = index">
                 <div class="row mb-3 " *ngIf="getChannelControl('response_mapping').value">
                   <div class="col-3">
-                    <app-input-textbox label="Data Field" placeholder="Enter Datafield"
+                    <app-input-textbox  placeholder="Enter Datafield"
                       [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
                   </div>
                   <div class="col-3">
-                    <app-input-textbox label="Map to" placeholder="Enter Mapto"
+                    <app-input-textbox  placeholder="Enter Mapto"
                       [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
                   </div>
-                  <div class="col-6 d-flex justify-content-start align-self-end">
+                  <div class="col-3 d-flex justify-content-start align-self-center">
                     <app-ds-button type="button" (click)="addResponseMapping($event)">+</app-ds-button>
                     <app-ds-button type="button" class="ms-1" (click)="removeResponseMapping($event,i)"
                       varient="light">-</app-ds-button>

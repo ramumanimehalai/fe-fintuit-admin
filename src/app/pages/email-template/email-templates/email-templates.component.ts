@@ -8,66 +8,64 @@ import { ApiService } from '../../../service/api.service';
 interface EmailTemplate {
   title: string;
   description: string;
-  templatecode: string;
-  icon: string;
+  templateCode: string;
+  createdAt: string;
+  updatedAt: string;
+  icon?: string;
+  id?:string
 }
 
 @Component({
   selector: 'app-email-templates',
   standalone: true,
-  imports: [DsButtonComponent, DsIconComponent, CommonModule,MatTooltipModule, DsDropdwonPopupComponent],
+  imports: [DsButtonComponent, DsIconComponent, CommonModule, MatTooltipModule, DsDropdwonPopupComponent],
   templateUrl: './email-templates.component.html',
   styleUrl: './email-templates.component.scss',
 })
 export class EmailtemplateComponent implements OnInit {
-  constructor(private route: Router, private apiService: ApiService) {}
+  constructor(private route: Router, private apiService: ApiService) { }
   emailTemplates: EmailTemplate[] = [];
-  emailTemplateSettings =[];
+
   ngOnInit(): void {
     this.emailTemplatesSettings()
-    this.emailTemplates = [
-      // {
-      //   title: 'New User Onboarding Email',
-      //   description:
-      //     'When a new user is added, an email has to be sent to the user with a password.',
-      //   templatecode: '102',
-      //   icon: 'icon', // replace with actual icon name if needed
-      // },
-      // {
-      //   title: 'New User Onboarding Email',
-      //   description:
-      //     'When a new user is added, an email has to be sent to the user with a password.',
-      //     templatecode: '102',
-      //   icon: 'icon', // replace with actual icon name if needed
-      // },
-      // {
-      //   title: 'New User Onboarding Email',
-      //   description:
-      //     'When a new user is added, an email has to be sent to the user with a password.',
-      //     templatecode: '102',
-      //   icon: 'icon', // replace with actual icon name if needed
-      // },
-    ];
   }
-  emailTemplatesSettings(){
-    console.log('emailTemplatesSettings')
-  this.apiService.getAllChannels({page: 1, size: 10}).subscribe({
-    next: (res: any) => {
-      console.log(res,"responseValue")
-      this.emailTemplateSettings = res.data
-    },
-    error: (error) => {
-      console.error('error-->', error);
-    },
-    complete: () => {
-      // handle loaders
-    },
-  })
+
+  emailTemplatesSettings(page: number = 1, size: number = 10): void {
+    this.apiService.getAllEmailTemplate({ page, size }).subscribe({
+      next: (res: any) => {
+        if (Array.isArray(res.data.data)) {
+          this.emailTemplates = res.data.data.map((item: any) => ({
+            title: item.emailSubject,
+            description: this.convertHtmlToText(item.emailContent),
+            templateCode: item.templateCode,
+            createdAt: item.createdAt,
+            updatedAt: item.updatedAt,
+            icon: '',
+            id: item.id
+          }));
+        } else {
+          console.error('Expected an array but received:', res.data);
+          this.emailTemplates = [];
+        }
+      },
+      error: (err: any) => {
+        console.error('Error occurred while fetching email templates:', err);
+      },
+      complete: () => {
+        console.log('Request complete.');
+      },
+    });
+  }
+
+
+  convertHtmlToText(html: string): string {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    return doc.body.textContent || ''; // Extract plain text from HTML
   }
   dropDownOptions = [
     { label: 'Edit', key: 'edit' },
     { label: 'Delete', key: 'delete' },
-    { label: 'Pause', key: 'pause' }
   ];
 
   get isEmptyList() {
@@ -76,7 +74,12 @@ export class EmailtemplateComponent implements OnInit {
   navigateTo(url: string) {
     this.route.navigateByUrl(url);
   }
-  onButtonClicked(event: any): void {
-    console.log('Dropdown option selected:', event);
-  }
+  onButtonClicked(event: any, template: EmailTemplate): void {
+    if (event === 'edit') {
+      this.route.navigate([`/create-new-email-template/${template.templateCode}`]);
+    } else if (event.key && event.key === 'delete') {
+      console.log('Delete action for template:', template.templateCode);
+    }
+  }  
 }
+

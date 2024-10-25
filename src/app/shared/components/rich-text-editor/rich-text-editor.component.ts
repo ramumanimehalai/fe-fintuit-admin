@@ -4,13 +4,14 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Output, EventE
   selector: 'app-rich-text-editor',
   standalone: true,
   templateUrl: './rich-text-editor.component.html',
-  styleUrls: ['./rich-text-editor.component.scss'] // Ensure the filename is correct
+  styleUrls: ['./rich-text-editor.component.scss']
 })
 export class RichTextEditorComponent implements OnInit, AfterViewInit {
   @ViewChild('editorContainer', { static: true }) editorContainer!: ElementRef;
 
   @Output() contentChange = new EventEmitter<string>(); // Emit content change
   @Input() label: string = ''; // Accept label as input
+  @Input() initialContent: string = ''; // Accept initial content as input
 
   private editor: any; // Store a reference to the editor
   public previewContent: string = ''; // Property to hold the preview content
@@ -25,8 +26,13 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
 
   initializeEditor() {
     this.editor = new (window as any).RichTextEditor(this.editorContainer.nativeElement);
-    console.log('Editor initialized:', this.editor); // Confirm initialization
-  
+
+    // Set initial content if provided
+    if (this.initialContent) {
+      console.log(this.initialContent,"initialcontent from rich text")
+      this.editor.setHTMLCode(this.initialContent);
+    }
+
     const iframeDocument = this.editor.getDocument(); // Access the document inside the iframe
     if (iframeDocument) {
       const observer = new MutationObserver(() => {
@@ -35,7 +41,7 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
         this.previewContent = content;
         this.contentChange.emit(content);
       });
-  
+
       // Start observing the body inside the iframe for changes
       observer.observe(iframeDocument.body, {
         childList: true,
@@ -46,6 +52,4 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
       console.error('Failed to access the iframe document');
     }
   }
-  
-  
 }

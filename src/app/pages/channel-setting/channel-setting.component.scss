@@ -35,3 +35,8 @@
     display: flex;
     gap: 4px;
 }
+.noTemplatesStyle{
+  border-radius: 12px;
+  padding-bottom: 40px;
+@extend .common-border-style,
+}

@@ -48,5 +48,8 @@
     cursor: pointer;
    @extend .common-truncated-text 
   }
+  .table-width{
+    width: 40rem;
+  }
   
 }
