@@ -23,6 +23,11 @@ const routes: Routes = [
     data: { breadcrumb: 'New Email Template' },
   },
   {
+    path: 'create-new-email-template/:id',
+    component: NewemailtemplateComponent,
+    data: { breadcrumb: 'New Email Template' },
+  },
+  {
     path: 'add-new-channel',
     component: AddNewChannelComponent,
     data: { breadcrumb: 'Add New Channel' },

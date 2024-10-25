@@ -2,10 +2,11 @@ export const endPoint = {
     authenticate: {
       login: "/todos",
     },
-    user: {
-        getUser: "/user",
-        list: "/user/list",
-        update: "/user/:emailId",
+    channels: {
+        list: "/notifications/v1/templates",
+        createTemplate: "/notifications/v1/templates",
+        editTemplate:"/notifications/v1/templates/id",
+        updateTemplate:"/notifications/v1/templates/:id"
       },
   }
   

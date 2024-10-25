@@ -1,4 +1,9 @@
+const username = "root";
+const password = "root";
+const basicAuth = btoa(`${username}:${password}`);
+
+
 export const environment = {
-  BaseUrl: 'https://jsonplaceholder.typicode.com',
-  encriptKey: 'your encript key base 64',
+  BaseUrl: '',
+  encriptKey: `Basic ${basicAuth}`,
 };

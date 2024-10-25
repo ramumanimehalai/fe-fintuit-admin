@@ -17,9 +17,7 @@
       </div>
       <div>
         <ng-container *ngIf="!isEmptyList">
-          <app-ds-button (click)="navigateTo('/create-new-email-template')"
-            >New Email Template</app-ds-button
-          >
+          <app-ds-button (click)="navigateTo('/create-new-email-template')">New Email Template</app-ds-button>
         </ng-container>
       </div>
     </div>
@@ -28,9 +26,7 @@
         <div class="mt-5">
           <div>Create a new email template</div>
           <div class="mt-3">
-            <app-ds-button (click)="navigateTo('/create-new-email-template')"
-              >New Email Template</app-ds-button
-            >
+            <app-ds-button (click)="navigateTo('/create-new-email-template')">New Email Template</app-ds-button>
           </div>
         </div>
       </div>
@@ -38,27 +34,45 @@
     <ng-container *ngIf="!isEmptyList; else noTemplates">
       <ng-container *ngFor="let template of emailTemplates">
         <div class="email-template__card">
-          <div
-            class="w-100 d-flex align-items-center justify-content-between py-3 px-4"
-          >
+          <div class="w-100 d-flex align-items-center justify-content-between py-3 px-4">
             <div class="d-flex align-items-center">
               <div class="px-3 py-2 bg-primary rounded">
                 <div>+</div>
               </div>
-              <div class="ms-2">
-                <h4 class="fw-bolder">{{ template.title }}</h4>
-                <div>
-                  {{ template.description }}
+              <div class="ms-2 flex-grow-1"> <!-- Use flex-grow-1 to allow this div to grow but limit its width -->
+                <div class="row table-width">
+                  <div class="col-auto">
+                    <h4 class="fw-bolder">{{ template.title }}</h4> 
+                  </div>
+                  <div class="col-auto">
+                    <div class="template-description">
+                      {{ template.description }} 
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div>Template Id: {{ template.templateId }}</div>
+            
+            <div class="truncated-text d-flex  align-items-start justify-content-center">
+              Template code:
+              <span class="common-truncated-text" matTooltip="{{ template.templateCode }}" matTooltipPosition="above">
+                {{ template.templateCode }}
+              </span>
+            </div>            
             <div>
-              {{ template.icon }}
+              <app-ds-dropdwon-popup icon="alert-circle" variant="info" [iconSize]="15"
+              (onSelected)="onButtonClicked($event, template)"  position="left" [options]="dropDownOptions">
+              </app-ds-dropdwon-popup>
             </div>
           </div>
         </div>
       </ng-container>
     </ng-container>
+    <ng-template #noTemplates>
+      <div class="no-templates-message">
+        No email templates available.
+      </div>
+    </ng-template>
+    
   </div>
 </div>

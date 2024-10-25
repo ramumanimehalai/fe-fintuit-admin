@@ -2,6 +2,7 @@ import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import {
   provideHttpClient,
+  withFetch,
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -19,6 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       // DI-based interceptors must be explicitly enabled.
       withInterceptorsFromDi(),
+      withFetch()
     ),
     provideAnimationsAsync(),
     { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true },

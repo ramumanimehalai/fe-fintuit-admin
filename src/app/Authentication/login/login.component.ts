@@ -60,21 +60,18 @@ export class LoginComponent implements OnInit {
       const payload = {
         ...this.form.value,
       };
-      this.apiservice.onLogin(payload).subscribe({
-        next: (res) => {
-          console.log('====================================');
-          console.log(res);
-          console.log('====================================');
-            this.storage.setCookieStorage(res);
-        },
-        error: (error) => {
+      // this.apiservice.onLogin(payload).subscribe({
+      //   next: (res) => {
+            this.storage.setCookieStorage(payload);
+        // },
+        // error: (error) => {
           this.isSubmitted = false;
-          console.log('error-->', error);
-        },
-        complete: () => {
+        //   console.log('error-->', error);
+        // },
+        // complete: () => {
           this.route.navigate(['/']);
-        },
-      });
+        // },
+      // });
     }
   }
 }

@@ -1,42 +1,52 @@
 @import "../../style/common-variables";
+@import "../../style/common-classes";
 
 .form-container {
-  background-color: $form-bg-color;
+  min-height: 100vh; 
+  max-height: 100vh; 
+  overflow: auto; 
+  background-color: $form-bg-color; 
 }
+
 .header_marker {
-  width: 5px;
-  height: 26px;
-  background-color: $primary-color;
+  @extend .marker-style
 }
 .section-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 15px 0px;
+  @extend .flex-header-style
 }
 .header_text {
-  color: $black;
-  font-weight: 500;
-  font-size: 18px;
-  font-family: var(--font-family);
+  @extend .common-title;
 }
 .header-container {
-  padding: 18px; /* Add padding for spacing */
-  background-color: $white; /* Example background color */
+  @extend .common-header-container;
 }
 .divider {
-  height: 1px; /* Thickness of the line */
-  background-color: $border-color; /* Color of the line */
+  @extend .common-border-style;
 }
 .templateheader_text {
-  color: $black;
-  font-weight: 500;
   font-size: 14px;
-  font-family: var(--font-family);
+  @extend .common-title;
 }
 .rectangular-box {
-  background-color: $white; /* Light background color */
-  border: 1px solid $border-color; /* Border color */
-  border-radius: 12px; /* Slightly rounded corners */
-  padding: 20px; /* Padding inside the box */
+  @extend .common-rectangular-box;
 }
+.box {
+  overflow: hidden;
+  background-color: transparent; 
+  border: 1px solid $background-color; 
+  padding: 10px; /* Padding inside the box */
+  border-radius: 5px; /* Rounded corners */
+  text-align: center; /* Center text */
+  color: var(--table-border)
+}
+
+.active-background {
+  background-color: $white; /* Change this to your desired active background color */
+  color: $black;
+  border: 1px solid $border-color; /* Border */
+}
+.common_center{
+  display: flex;
+  justify-content: center;
+}
+

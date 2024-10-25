@@ -25,6 +25,7 @@
     "@material/drawer": "^14.0.0",
     "anand-button-component": "^0.0.2",
     "bootstrap": "^5.3.3",
+    "cors": "^2.8.5",
     "jas-ui-lib": "^0.0.14",
     "ngx-cookie-service": "^18.0.0",
     "ngx-quill": "^26.0.8",
