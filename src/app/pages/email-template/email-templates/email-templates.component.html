@@ -42,23 +42,22 @@
               <div class="ms-2 flex-grow-1"> <!-- Use flex-grow-1 to allow this div to grow but limit its width -->
                 <div class="row table-width">
                   <div class="col-auto">
-                    <h4 class="fw-bolder">{{ template.title }}</h4> 
+                    <h4 class="fw-bolder">{{ template.title }}</h4>
                   </div>
                   <div class="col-auto">
                     <div class="template-description">
-                      {{ template.description }} 
+                      {{ template.description }}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            
+
             <div class="truncated-text d-flex  align-items-start justify-content-center">
-              Template code:
               <span class="common-truncated-text" matTooltip="{{ template.templateCode }}" matTooltipPosition="above">
                 {{ template.templateCode }}
               </span>
-            </div>            
+            </div>
             <div>
               <app-ds-dropdwon-popup icon="alert-circle" variant="info" [iconSize]="15"
               (onSelected)="onButtonClicked($event, template)"  position="left" [options]="dropDownOptions">
@@ -73,6 +72,6 @@
         No email templates available.
       </div>
     </ng-template>
-    
+
   </div>
 </div>
