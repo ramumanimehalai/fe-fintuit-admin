@@ -4,6 +4,6 @@ const basicAuth = btoa(`${username}:${password}`);
 
 
 export const environment = {
-  BaseUrl: '',
+  BaseUrl: 'https://services.fintuit.tech',
   encriptKey: `Basic ${basicAuth}`,
 };
