@@ -14,6 +14,8 @@ export class InputTextboxComponent {
   @Input() label!: string;
   @Input() placeholder!: string;
   @Output() valueChange = new EventEmitter<string>();
+  @Input() type: string = 'text';
+  @Input() disabled: boolean = false;
 
   get isInvalid(): boolean {
     return this.control.invalid && (this.control.touched || this.control.dirty);

@@ -1,10 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-main-dashboard',
   standalone: true,
-  imports: [],
+  imports: [CommonModule], // Include the input textbox component
   templateUrl: './main-dashboard.component.html',
-  styleUrl: './main-dashboard.component.scss',
+  styleUrls: ['./main-dashboard.component.scss'],
 })
-export class MainDashboardComponent {}
+export class MainDashboardComponent {
+
+}

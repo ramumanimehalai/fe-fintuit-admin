@@ -2,12 +2,8 @@
 @import "../../style/common-classes";
 
 .form-container {
-  min-height: 100vh;
-  max-height: 100vh;
-  overflow: auto;
   background-color: $form-bg-color;
 }
-
 .header_marker {
   @extend .marker-style
 }
@@ -31,13 +27,13 @@
   @extend .common-rectangular-box;
 }
 .box {
-  overflow: hidden;
+  // overflow: hidden;
   background-color: transparent;
   border: 1px solid $background-color;
   padding: 10px; /* Padding inside the box */
   border-radius: 5px; /* Rounded corners */
   text-align: center; /* Center text */
-  color: var(--table-border)
+  color: var(--table-border);
 }
 
 .active-background {
@@ -45,8 +41,5 @@
   color: $black;
   border: 1px solid $border-color; /* Border */
 }
-.common_center{
-  display: flex;
-  justify-content: center;
-}
+
 

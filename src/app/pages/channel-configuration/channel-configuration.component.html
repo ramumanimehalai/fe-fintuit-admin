@@ -1,0 +1,156 @@
+<div>
+  <div class="header-container d-flex justify-content-between align-items-center">
+    <h2 class="m-0">Add new channel</h2>
+    <div class="d-flex align-items-center">
+      <app-ds-button varient="light" class="me-2">close</app-ds-button>
+      <app-ds-button class="me-2">save & close</app-ds-button>
+      <p class="mb-0">Icon</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="px-5 form-container">
+    <div class="row h-100">
+      <div class="col-12 mt-3">
+        <div class="section-header d-flex align-items-center">
+          <div class="header_marker"></div>
+          <div class="header_text">Region Settings</div>
+        </div>
+        <div class="col-8 mb-3">
+          <label for="region">Region</label>
+          <select id="region" class="form-control mt-1" (input)="onSelectRegion($event)">
+            <option value="" disabled>Select Region</option>
+            <option value="us">US</option>
+            <option value="eu">EU</option>
+          </select>
+        </div>
+        <div class="col-8 mb-3">
+          <label for="chooseChannel" class="mb-3">Choose Channels</label>
+          <div class="row mb-3 col-12">
+            <div class="col-4">
+              <div class="box d-flex align-items-center justify-content-between" [ngClass]="{'active-background': toggleStates['email']}">
+                <div class="d-flex align-items-center">
+                  <app-ds-icon icon="alert-circle" [size]="15" variant="primary"></app-ds-icon>
+                  <div class="ms-2">Email</div>
+                </div>
+                <app-ds-toggle [isChecked]="toggleStates['email']" [activeLabel]="''" [inactiveLabel]="''" (toggleChange)="toggle('email')"></app-ds-toggle>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="box d-flex align-items-center justify-content-between" [ngClass]="{'active-background': toggleStates['textMessage']}">
+                <div class="d-flex align-items-center">
+                  <app-ds-icon icon="alert-circle" [size]="15" variant="primary"></app-ds-icon>
+                  <div class="ms-2">Text Message</div>
+                </div>
+                <app-ds-toggle  [isChecked]="toggleStates['textMessage']"  [activeLabel]="''" [inactiveLabel]="''" (toggleChange)="toggle('textMessage')"></app-ds-toggle>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="box d-flex align-items-center justify-content-between" [ngClass]="{'active-background': toggleStates['whatsapp']}">
+                <div class="d-flex align-items-center">
+                  <app-ds-icon icon="alert-circle" [size]="15" variant="primary"></app-ds-icon>
+                  <div class="ms-2">whatsapp</div>
+                </div>
+                <app-ds-toggle  [isChecked]="toggleStates['whatsapp']"  [activeLabel]="''" [inactiveLabel]="''" (toggleChange)="toggle('whatsapp')"></app-ds-toggle>
+              </div>
+            </div>
+            <div class="col-4 mt-3">
+              <div class="box d-flex align-items-center justify-content-between" [ngClass]="{'active-background': toggleStates['notification']}">
+                <div class="d-flex align-items-center">
+                  <app-ds-icon icon="alert-circle" [size]="15" variant="primary"></app-ds-icon>
+                  <div class="ms-2">Notification</div>
+                </div>
+                <app-ds-toggle [isChecked]="toggleStates['notification']"  [activeLabel]="''" [inactiveLabel]="''" (toggleChange)="toggle('notification')" ></app-ds-toggle>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="section-header">
+      <div class="header_marker"></div>
+      <div class="header_text">Channel Configuration</div>
+    </div>
+    <div class="col-8">
+      <mat-tab-group>
+        <mat-tab label="Email" >
+          <div class="col-12 mt-4">
+            <div class="col-12 mb-3">
+              <app-input-textbox label="SMTP server" placeholder="smtp server"
+                [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
+            </div>
+            <div class="col-12 mb-3">
+              <app-input-textbox label="SMTP port" placeholder="smtp port"
+                [control]="getEmailConfigControl('smtpPort')"></app-input-textbox>
+            </div>
+            <div class="col-12 mb-3">
+              <app-input-textbox label="SMTP username" placeholder="smtp username"
+                [control]="getEmailConfigControl('smtpUserName')"></app-input-textbox>
+            </div>
+            <div class="col-12 mb-3">
+              <app-input-textbox label="SMTP password" placeholder="smtp password"
+                [control]="getEmailConfigControl('smtpPassword')"></app-input-textbox>
+            </div>
+            <div class="col-12 mb-3">
+              <app-input-textbox label="Sender name" placeholder="sender name"
+                [control]="getEmailConfigControl('senderName')"></app-input-textbox>
+            </div>
+            <div class="col-12">
+              <app-input-textbox label="Sender email" placeholder="sender email"
+                [control]="getEmailConfigControl('senderEmail')"></app-input-textbox>
+            </div>
+            <div class="col-12 mt-1 d-flex justify-content-between mb-3">
+              <div class="form-check ms-1">
+                <input type="checkbox" [formControl]="getEmailConfigControl('enableTLS')" class="form-check-input"
+                  id="enableTLS" />
+                <label class="form-check-label" for="enableTLS">Enable TLS
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" [formControl]="getEmailConfigControl('active')" class="form-check-input"
+                  id="emailConfigActive" />
+                <label class="form-check-label" for="emailConfigActive">Active</label>
+              </div>
+            </div>
+            <div class="col-6 d-flex mb-3">
+              <app-ds-button varient="light">close</app-ds-button>
+              <app-ds-button class="ms-1">save</app-ds-button>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="SMS">
+       <app-add-new-channel></app-add-new-channel>
+        </mat-tab>
+
+        <mat-tab label="Whatsapp">
+          <app-add-new-channel></app-add-new-channel>
+        </mat-tab>
+
+        <mat-tab label="Push Notifications">
+          <div class="col-12 mt-4">
+            <div class="col-12 mb-3">
+              <app-input-textbox label="FCM server key" placeholder="fcm server key"
+                [control]="getPushConfigControl('fcmServerKey')"></app-input-textbox>
+            </div>
+            <div class="col-12">
+              <app-input-textbox label="FCM sender ID" placeholder="fcm sender id"
+                [control]="getPushConfigControl('fcmSenderId')"></app-input-textbox>
+            </div>
+            <div class="col-12 mt-1 mb-3">
+              <div class="form-check ms-1">
+                <input type="checkbox" [formControl]="getSmsConfigControl('active')" class="form-check-input"
+                  id="pushConfigActive" />
+                <label class="form-check-label" for="pushConfigActive">Active</label>
+              </div>
+            </div>
+            <div class="col-6 d-flex mb-3">
+              <app-ds-button varient="light">close</app-ds-button>
+              <app-ds-button class="ms-1">save</app-ds-button>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

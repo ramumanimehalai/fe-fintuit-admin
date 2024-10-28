@@ -7,6 +7,7 @@
     [placeholder]="placeholder"
     (input)="onInputChange($event)"
     [ngClass]="{ 'is-invalid': isInvalid }"
+    [disabled]="disabled"
   />
   <div *ngIf="isInvalid" class="invalid-feedback">
     <div *ngIf="control.errors?.['required']">This field is required.</div>

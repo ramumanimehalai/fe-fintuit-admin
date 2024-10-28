@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainDashboardComponent } from './main-dashboard/main-dashboard.component';
 import { EmailtemplateComponent } from './email-template/email-templates/email-templates.component';
 import { NewemailtemplateComponent } from './email-template/new-email-template/new-email-template.component';
-import { AddNewChannelComponent } from './add-new-channel/add-new-channel.component';
+import { ChannelConfigurationComponent } from './channel-configuration/channel-configuration.component';
 import { ChannelSettingComponent } from './channel-setting/channel-setting.component';
 
 const routes: Routes = [
@@ -28,8 +28,8 @@ const routes: Routes = [
     data: { breadcrumb: 'New Email Template' },
   },
   {
-    path: 'add-new-channel',
-    component: AddNewChannelComponent,
+    path: 'app-channel-configuration',
+    component: ChannelConfigurationComponent,
     data: { breadcrumb: 'Add New Channel' },
   },
   {
