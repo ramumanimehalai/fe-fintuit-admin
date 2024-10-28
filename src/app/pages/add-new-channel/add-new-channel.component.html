@@ -1,25 +1,13 @@
 <div>
-  <div class="header-container d-flex justify-content-between align-items-center">
-    <h2 class="m-0">Add new channel</h2>
-    <div class="d-flex align-items-center">
-      <app-ds-button varient="light" class="me-2">close</app-ds-button>
-      <app-ds-button class="me-2">save & close</app-ds-button>
-      <p class="mb-0">Icon</p>
-    </div>
-  </div>
   <div class="divider"></div>
-  <div class="px-5 form-container">
+  <div class="px-2 form-container">
     <div class="row h-100">
       <div class="col-12 mt-3">
-        <div class="section-header">
-          <div class="header_marker"></div>
-          <div class="header_text">Channel Configuration</div>
-        </div>
-        <div class="col-6 mb-3">
+        <div class="col-12 mb-3">
           <app-input-textbox label="API Endpoint" placeholder="Enter API Endpoint"
             [control]="getAuthorizationConfig('apiEndpoint')"></app-input-textbox>
         </div>
-        <div class="col-6 mb-3">
+        <div class="col-12 mb-3">
           <label for="region">Method</label>
           <select id="region" class="form-control mt-1" (input)="onSelectMethod($event)">
             <option value="" disabled>Select Method</option>
@@ -27,7 +15,7 @@
             <option value="POST">POST</option>
           </select>
         </div>
-        <div class="col-6 mb-3">
+        <div class="col-12 mb-3">
           <label for="authorization">Authorization</label>
           <select id="authorization" class="form-control mt-1" (input)="onSelectAuthorization($event)">
             <option value="" disabled>Select Authorization</option>
@@ -39,31 +27,31 @@
         </div>
         <div>
           <div *ngIf="selectedAuth === 'Basic Auth'">
-            <div class="col-6 mb-3">
+            <div class="col-12 mb-3">
               <app-input-textbox label="Username" placeholder="Enter username"
                 [control]="getAuthorizationConfig('username')"></app-input-textbox>
             </div>
-            <div class="col-6 mb-3">
-              <app-input-textbox label="Password" placeholder="Enter password"
+            <div class="col-12 mb-3">
+              <app-input-textbox label="Password" type='Password' placeholder="Enter password"
                 [control]="getAuthorizationConfig('password')"></app-input-textbox>
             </div>
           </div>
           <div *ngIf="selectedAuth === 'Bearer token'">
-            <div class="col-6 mb-3">
+            <div class="col-12 mb-3">
               <app-input-textbox label="Token" placeholder="Enter token"
                 [control]="getAuthorizationConfig('token')"></app-input-textbox>
             </div>
           </div>
           <div *ngIf="selectedAuth === 'API Key'">
-            <div class="col-6 mb-3">
+            <div class="col-12 mb-3">
               <app-input-textbox label="Key" placeholder="Enter key"
                 [control]="getAuthorizationConfig('key')"></app-input-textbox>
             </div>
-            <div class="col-6 mb-3">
+            <div class="col-12 mb-3">
               <app-input-textbox label="Value" placeholder="Enter value"
                 [control]="getAuthorizationConfig('value')"></app-input-textbox>
             </div>
-            <div class="col-6 mb-3">
+            <div class="col-12 mb-3">
               <label for="region">Add to</label>
               <select id="region" class="form-control mt-1">
                 <option value="" disabled>Large Select</option>
@@ -74,79 +62,80 @@
           </div>
         </div>
         <div class="col-12 mb-3">
-          <!-- <label>Select Channels</label> -->
           <div>
             <div class="form-check mb-3">
-              <input type="checkbox" [formControl]="getChannelControl('custom_heder')" class="form-check-input"
-                id="emailChannel" (change)="onCustomHeaderChange($event)" />
-              <label class="form-check-label" for="emailChannel">Custom Header</label>
+              <input type="checkbox" [(ngModel)]="isCustomHeaderEnabled" (change)="toggleCustomHeaders()"
+                class="form-check-input" id="customHeaders" />
+              <label class="form-check-label" for="customHeaders">Custom Header</label>
             </div>
-            <div *ngIf="getChannelControl('custom_heder').value">
-              <ng-container *ngFor="let item of customHeaderItem; let i = index">
-                <div class="row mb-3">
-                  <div class="col-3">
-                    <app-input-textbox  placeholder="Enter Key"
-                      [control]="getEmailConfigControl('smtpUserName')"></app-input-textbox>
+            <div>
+              <div *ngIf="isCustomHeaderEnabled" class="row w-100 mb-3">
+                <div *ngFor="let header of customHeaders.controls; let i = index" class="row w-100 mb-3">
+                  <div class="col-5">
+                    <app-input-textbox placeholder="Enter Key" [control]="$any(header).get('key')"></app-input-textbox>
                   </div>
-                  <div class="col-3">
-                    <app-input-textbox  placeholder="Enter Value"
-                      [control]="getEmailConfigControl('smtpPassword')"></app-input-textbox>
+                  <div class="col-5">
+                    <app-input-textbox placeholder="Enter Value"
+                      [control]="$any(header).get('Value')"></app-input-textbox>
                   </div>
-                  <div class="col-3  d-flex justify-content-start align-items-start ">
+                  <div class="col-2  d-flex justify-content-start align-items-start ">
                     <app-ds-button type="button" (click)="addCustomHeader($event)">+</app-ds-button>
-                    <app-ds-button type="button" class="ms-1" (click)="removeCustomHeader($event, i)"
+                    <app-ds-button type="button" class="ms-1" (click)="removeCustomHeader($event,i)"
                       varient="light">-</app-ds-button>
                   </div>
                 </div>
-              </ng-container>
+              </div>
             </div>
+          </div>
+          <div>
             <div class="form-check mb-3">
-              <input type="checkbox" [formControl]="getChannelControl('request_mapping')" class="form-check-input"
-                (change)="onRequestMapping($event)" id="smsChannel" />
-              <label class="form-check-label" for="smsChannel">Request Mapping</label>
+              <input type="checkbox" [(ngModel)]="requestMappingEnabled" (change)="toggleRequestMappings()"
+                class="form-check-input" id="requestMapping" />
+              <label class="form-check-label" for="requestMapping">Request Mapping</label>
             </div>
-            <div *ngIf="getChannelControl('request_mapping').value">
-              <ng-container *ngFor="let item of requestMappingItem; let i = index">
-                <div class="row mb-3 ">
-                  <div class="col-3">
-                    <app-input-textbox  placeholder="Enter Datafield"
-                      [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
+            <div>
+              <div *ngIf="requestMappingEnabled" class="row w-100 mb-3">
+                <div *ngFor="let mapping of requestMappings.controls; let i = index" class="row mb-3">
+                  <div class="col-5">
+                    <app-input-textbox placeholder="Enter Datafield"
+                      [control]="$any(mapping).get('key')"></app-input-textbox>
                   </div>
-                  <div class="col-3">
-                    <app-input-textbox  placeholder="Enter Mapto"
-                      [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
+                  <div class="col-5">
+                    <app-input-textbox placeholder="Enter Mapto"
+                      [control]="$any(mapping).get('Value')"></app-input-textbox>
                   </div>
-                  <div class="col-6 d-flex justify-content-start align-self-end">
+                  <div class="col-2 d-flex justify-content-start align-items-start">
                     <app-ds-button type="button" (click)="addRequestMapping($event)">+</app-ds-button>
-                    <app-ds-button type="button" class="ms-1" (click)="removeRequestMapping($event,i)"
-                      varient="light">-</app-ds-button>
+                    <app-ds-button type="button" class="ms-1" varient="light"
+                      (click)="removeRequestMapping($event, i)">-</app-ds-button>
                   </div>
                 </div>
-              </ng-container>
+              </div>
             </div>
+          </div>
+          <div>
             <div class="form-check mb-3">
-              <input type="checkbox" [formControl]="getChannelControl('response_mapping')" class="form-check-input"
-                id="whatsappChannel" (change)="onResponseMapping($event)"/>
-              <label class="form-check-label" for="whatsappChannel">Response Mapping</label>
+              <input type="checkbox" [(ngModel)]="responseMappingEnabled" (change)="toggleResponseMappings()"
+                class="form-check-input" id="responseMapping" />
+              <label class="form-check-label" for="responseMapping">Response Mapping</label>
             </div>
-            <div *ngIf="getChannelControl('response_mapping').value">
-              <ng-container *ngFor="let item of responseMappingItem; let i = index">
-                <div class="row mb-3 " *ngIf="getChannelControl('response_mapping').value">
-                  <div class="col-3">
-                    <app-input-textbox  placeholder="Enter Datafield"
-                      [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
+            <div>
+              <div *ngIf="responseMappingEnabled" class="row w-100 mb-3">
+                <div *ngFor="let mapping of responseMappings.controls; let i = index" class="row mb-3">
+                  <div class="col-5">
+                    <app-input-textbox placeholder="Enter Datafield"
+                    [control]="$any(mapping).get('key')"></app-input-textbox>
                   </div>
-                  <div class="col-3">
-                    <app-input-textbox  placeholder="Enter Mapto"
-                      [control]="getEmailConfigControl('smtpServer')"></app-input-textbox>
+                  <div class="col-5">
+                    <app-input-textbox placeholder="Enter Mapto"
+                    [control]="$any(mapping).get('Value')"></app-input-textbox>
                   </div>
-                  <div class="col-3 d-flex justify-content-start align-self-center">
+                  <div class="col-2 d-flex justify-content-start align-items-start">
                     <app-ds-button type="button" (click)="addResponseMapping($event)">+</app-ds-button>
-                    <app-ds-button type="button" class="ms-1" (click)="removeResponseMapping($event,i)"
-                      varient="light">-</app-ds-button>
+                    <app-ds-button type="button" (click)="removeResponseMapping($event, i)" class="ms-1" varient="light">-</app-ds-button>
                   </div>
                 </div>
-              </ng-container>
+              </div>
             </div>
           </div>
         </div>

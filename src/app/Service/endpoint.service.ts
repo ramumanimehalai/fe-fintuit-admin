@@ -3,10 +3,11 @@ export const endPoint = {
       login: "/todos",
     },
     channels: {
-        list: "/notifications/v1/templates",
-        createTemplate: "/notifications/v1/templates",
-        editTemplate:"/notifications/v1/templates/id",
-        updateTemplate:"/notifications/v1/templates/:id",
-        deleteTemplate: "/notifications/v1/templates"
+        list: "/notification/api/v1/notification-templates",
+        createTemplate: "/notification/api/v1/notification-templates",
+        editTemplate:"/notification/api/v1/notification-templates/id",
+        updateTemplate:"/notification/api/v1/notification-templates/:id",
+        deleteTemplate: "/notification/api/v1/notification-templates"
+
       },
   }

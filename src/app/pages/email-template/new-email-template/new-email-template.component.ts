@@ -93,7 +93,6 @@ export class NewemailtemplateComponent {
       createdBy: 0,
       updatedBy: 0,
     };
-    console.log(this.templateID,"templateIDUP")
     if(this.templateID){
       this.apiService.updateTemplateById(this.templateID, templateData).subscribe({
         next: (response :any) => {

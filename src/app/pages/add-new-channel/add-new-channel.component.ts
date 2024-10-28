@@ -4,6 +4,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -22,7 +23,8 @@ import { CommonModule } from '@angular/common';
     MatTabsModule,
     DsIconComponent,
     DsToggleComponent,
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   templateUrl: './add-new-channel.component.html',
   styleUrl: './add-new-channel.component.scss',
@@ -31,28 +33,22 @@ export class AddNewChannelComponent {
   public configForm!: FormGroup;
   username: string = '';
   selectedAuth: string = '';
-  usernameInvalid: boolean = false;
-  customHeaderItem: { Key: string; Value: string }[] = []; // Array to hold the response mappings
-  requestMappingItem: { dataField: string; mapTo: string }[] = []; // Array to hold the response mappings
-  responseMappingItem:  { dataField: string; mapTo: string }[] = [];
-  
-  toggleStates: { [key: string]: boolean } = {
-    email: false,
-    textMessage: false,
-    whatsapp: false,
-    notification: false
-  };
+  isCustomHeaderEnabled: boolean = false; // Initialize to false
+  requestMappingEnabled: boolean = false; // Initialize to false
+  responseMappingEnabled: boolean = false; // Initialize to false
 
   constructor(private fb: FormBuilder) {
     this.configForm = this.fb.group({
-      method: new FormControl('', Validators.required), // Region selection
-      authorization: new FormControl('', Validators.required), // Region selection
+      method: new FormControl('', Validators.required),
+      authorization: new FormControl('', Validators.required),
       channels: this.fb.group({
-        custom_heder: new FormControl(false), // Email checkbox
-        request_mapping: new FormControl(false), // SMS checkbox
-        response_mapping: new FormControl(false), // WhatsApp checkbox
+        custom_heder: new FormControl(false),
+        request_mapping: new FormControl(false),
+        response_mapping: new FormControl(false),
       }),
-      customHeaders: this.fb.array([]), // FormArray for custom headers
+      customHeaders: this.fb.array([]),
+      requestMappings: this.fb.array([]), // FormArray for request mappings
+      responseMappings: this.fb.array([]), // FormArray for response mappings
       emailConfig: this.fb.group({
         smtpServer: new FormControl('', Validators.required),
         smtpPort: new FormControl('', Validators.required),
@@ -64,24 +60,6 @@ export class AddNewChannelComponent {
           Validators.email,
         ]),
         enableTLS: new FormControl(false),
-        active: new FormControl(true),
-      }),
-      smsConfig: this.fb.group({
-        accountSSID: new FormControl('', Validators.required),
-        authToken: new FormControl('', Validators.required),
-        phoneNumber: new FormControl('', Validators.required),
-        active: new FormControl(true),
-      }),
-      whatsappConfig: this.fb.group({
-        apiEndpoint: new FormControl('', Validators.required),
-        accountSSID: new FormControl('', Validators.required),
-        authToken: new FormControl('', Validators.required),
-        whatsappNumber: new FormControl('', Validators.required),
-        active: new FormControl(true),
-      }),
-      pushConfig: this.fb.group({
-        fcmServerKey: new FormControl('', Validators.required),
-        fcmSenderId: new FormControl('', Validators.required),
         active: new FormControl(true),
       }),
       authorizationConfig: this.fb.group({
@@ -98,15 +76,16 @@ export class AddNewChannelComponent {
   }
 
   ngOnInit(): void {
-    // Optional: Initialize with one item
-    this.customHeaderItem.push({ Key: '', Value: '' });
-    this.requestMappingItem.push({ dataField: '', mapTo: '' });
-    this.responseMappingItem.push({ dataField: '', mapTo: '' });
   }
   get customHeaders(): FormArray {
     return this.configForm.get('customHeaders') as FormArray;
   }
-  
+  get requestMappings(): FormArray {
+    return this.configForm.get('requestMappings') as FormArray;
+  }
+  get responseMappings(): FormArray {
+    return this.configForm.get('responseMappings') as FormArray;
+  }
   onSubmit() { }
 
   getFormControl(groupName: string, controlName: string): FormControl {
@@ -114,24 +93,8 @@ export class AddNewChannelComponent {
     return group.get(controlName) as FormControl;
   }
 
-  getChannelControl(controlName: string): FormControl {
-    return this.configForm.get(['channels', controlName]) as FormControl;
-  }
-
   getEmailConfigControl(controlName: string): FormControl {
     return this.getFormControl('emailConfig', controlName);
-  }
-
-  getSmsConfigControl(controlName: string): FormControl {
-    return this.getFormControl('smsConfig', controlName);
-  }
-
-  getWhatsappConfigControl(controlName: string): FormControl {
-    return this.getFormControl('whatsappConfig', controlName);
-  }
-
-  getPushConfigControl(controlName: string): FormControl {
-    return this.getFormControl('pushConfig', controlName);
   }
 
   getAuthorizationConfig(controlName: string): FormControl {
@@ -146,84 +109,124 @@ export class AddNewChannelComponent {
     this.configForm.get('authorizationConfig.authorization')?.setValue(selectedValue);
     this.selectedAuth = selectedValue;
   }
-
-  toggle(key: string) {
-    this.toggleStates[key] = !this.toggleStates[key];
-  }
-
-  addCustomHeader(event: Event) {
-    event.stopPropagation();  
-    this.customHeaderItem.push({ Key: '', Value: '' });
-  }
-
-  addRequestMapping(event: Event) {
-    event.stopPropagation();  
-    this.requestMappingItem.push({ dataField: '', mapTo: '' });
-  }
-
-  addResponseMapping(event: Event) {
-    event.stopPropagation();  
-    this.responseMappingItem.push({ dataField: '', mapTo: '' });
-  }
-
-  removeCustomHeader(event: Event,index: number) {
+  removeCustomHeader(event: Event,index: number): void {
     event.stopPropagation();
-    if (this.customHeaderItem.length > 0) {
-      this.customHeaderItem.splice(index, 1);
-    }
-
-    if (this.customHeaderItem.length === 0) {
-      this.getChannelControl('custom_heder').setValue(false); // Set checkbox to false
+    this.customHeaders.removeAt(index);
+    if (this.customHeaders.length === 0) {
+      this.isCustomHeaderEnabled = false;
     }
   }
+  addCustomHeader(event?: Event): void {
+    event?.stopPropagation();
+    const hasEmptyHeader = this.customHeaders.controls.some((header) => {
+      const keyControl = header.get('key');
+      const valueControl = header.get('Value');
+      return !keyControl?.value || !valueControl?.value;
+    });
 
-  removeRequestMapping(event: Event,index: number) {
+    if (hasEmptyHeader) {
+      this.customHeaders.controls.forEach((header) => {
+        const keyControl = header.get('key');
+        const valueControl = header.get('Value');
+
+        keyControl?.markAsTouched();
+        valueControl?.markAsTouched();
+      });
+      return;
+    }
+
+    const headerGroup = this.fb.group({
+      key: new FormControl('', Validators.required),
+      Value: new FormControl('', Validators.required)
+    });
+    this.customHeaders.push(headerGroup);
+  }
+
+  toggleCustomHeaders(): void {
+    if (this.isCustomHeaderEnabled && this.customHeaders.length === 0) {
+      this.addCustomHeader()
+    } else if (!this.isCustomHeaderEnabled) {
+      this.customHeaders.clear();
+    }
+  }
+  addRequestMapping(event?: Event): void {
+    event?.stopPropagation();
+    const hasEmptyMapping = this.requestMappings.controls.some((mapping) => {
+      const keyControl = mapping.get('key');
+      const valueControl = mapping.get('Value');
+      return !keyControl?.value || !valueControl?.value;
+    });
+
+    if (hasEmptyMapping) {
+      this.requestMappings.controls.forEach((mapping) => {
+        const keyControl = mapping.get('key');
+        const valueControl = mapping.get('Value');
+        keyControl?.markAsTouched();
+        valueControl?.markAsTouched();
+      });
+      return;
+    }
+
+    const mappingGroup = this.fb.group({
+      key: new FormControl('', Validators.required),
+      Value: new FormControl('', Validators.required)
+    });
+    this.requestMappings.push(mappingGroup);
+  }
+
+  removeRequestMapping(event: Event, index: number): void {
     event.stopPropagation();
-    if (this.requestMappingItem.length > 0) {
-      this.requestMappingItem.splice(index, 1);
-    }
-
-    if (this.requestMappingItem.length === 0) {
-      this.getChannelControl('request_mapping').setValue(false); // Set checkbox to false
+    this.requestMappings.removeAt(index);
+    if (this.requestMappings.length === 0) {
+      this.requestMappingEnabled = false; // Uncheck if empty
     }
   }
 
-  removeResponseMapping(event: Event,index: number) {
+  toggleRequestMappings(): void {
+    if (this.requestMappingEnabled && this.requestMappings.length === 0) {
+      this.addRequestMapping();
+    } else if (!this.requestMappingEnabled) {
+      this.requestMappings.clear();
+    }
+  }
+  addResponseMapping(event?: Event): void {
+    event?.stopPropagation();
+    const hasEmptyMapping = this.responseMappings.controls.some((mapping) => {
+      const keyControl = mapping.get('key');
+      const valueControl = mapping.get('Value');
+      return !keyControl?.value || !valueControl?.value;
+    });
+
+    if (hasEmptyMapping) {
+      this.responseMappings.controls.forEach((mapping) => {
+        const keyControl = mapping.get('key');
+        const valueControl = mapping.get('Value');
+        keyControl?.markAsTouched();
+        valueControl?.markAsTouched();
+      });
+      return;
+    }
+
+    const mappingGroup = this.fb.group({
+      key: new FormControl('', Validators.required),
+      Value: new FormControl('', Validators.required)
+    });
+    this.responseMappings.push(mappingGroup);
+  }
+
+  removeResponseMapping(event: Event, index: number): void {
     event.stopPropagation();
-    if (this.responseMappingItem.length > 0) {
-      this.responseMappingItem.splice(index, 1);
-    }
-
-    if (this.responseMappingItem.length === 0) {
-      this.getChannelControl('response_mapping').setValue(false); // Set checkbox to false
+    this.responseMappings.removeAt(index);
+    if (this.responseMappings.length === 0) {
+      this.responseMappingEnabled = false; // Uncheck if empty
     }
   }
 
-  onCustomHeaderChange(event: Event): void {
-    const checkbox = event.target as HTMLInputElement;
-    if (checkbox.checked) {
-      // If checked, add an item to display textbox
-      if (this.customHeaderItem.length === 0) {
-        this.customHeaderItem.push({ Key: '', Value: '' });
-      }
-    }
-  }
-  onRequestMapping(event: Event): void {
-    const checkbox = event.target as HTMLInputElement;
-    if (checkbox.checked) {
-      // If checked, add an item to display textbox
-      if (this.requestMappingItem.length === 0) {
-        this.requestMappingItem.push({ dataField: '', mapTo: '' });
-      }
-    }
-  }
-  onResponseMapping(event: Event): void {
-    const checkbox = event.target as HTMLInputElement;
-    if (checkbox.checked) {
-      // If checked, add an item to display textbox
-      if (this.responseMappingItem.length === 0) {
-        this.responseMappingItem.push({ dataField: '', mapTo: '' });
-      }
+  toggleResponseMappings(): void {
+    if (this.responseMappingEnabled && this.responseMappings.length === 0) {
+      this.addResponseMapping();
+    } else if (!this.responseMappingEnabled) {
+      this.responseMappings.clear();
     }
   }
 }
